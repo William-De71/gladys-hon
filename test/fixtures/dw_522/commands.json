@@ -1,0 +1,967 @@
+{
+  "settings": {
+    "setConfig": {
+      "description": "The message allows to set platform parameters",
+      "protocolType": "MQTT",
+      "parameters": {
+        "httpEndpoint": { "category": "command", "typology": "fixed", "mandatory": 0 },
+        "mqttEndpoint": { "category": "command", "typology": "fixed", "mandatory": 0 }
+      }
+    },
+    "setParameters": {
+      "description": "The message allows to change parameters values to enable/disable specific features ",
+      "protocolType": "MQTT",
+      "parameters": {
+        "buzzerDisabled": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "lastCycleSavingStatus": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "waterHard": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "4",
+          "minimumValue": "0",
+          "maximumValue": "7",
+          "incrementValue": "1"
+        }
+      }
+    }
+  },
+  "stopProgram": {
+    "description": "The command allows to stop the program",
+    "protocolType": "MQTT",
+    "parameters": {
+      "onOffStatus": {
+        "category": "command",
+        "typology": "fixed",
+        "mandatory": 1,
+        "fixedValue": "0"
+      }
+    }
+  },
+  "startProgram": {
+    "PROGRAMS.DW.ECO_BLDC": {
+      "description": "Program for normally soiled tableware (the most efficient in terms of its combined energy and water consumption for that type of tableware). Program STANDARDISED TO EN 50242.",
+      "protocolType": "MQTT",
+      "parameters": {
+        "checkUpStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1410",
+          "incrementValue": "30"
+        },
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "extraDry": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "openDoor": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "prCode": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "8" },
+        "prPosition": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prStr": { "category": "command", "typology": "fixed", "mandatory": 1 }
+      },
+      "ancillaryParameters": {
+        "ecoIndex": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "4"
+        },
+        "ecoIndexOpt4": {
+          "category": "general",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["eyIxIjoyLDV9"]
+        },
+        "ecoIndexOpt5": {
+          "category": "general",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["eyIxIjo1fQ=="]
+        },
+        "energyLabel": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "4",
+          "minimumValue": "0,5",
+          "maximumValue": "5",
+          "incrementValue": "0"
+        },
+        "functionalId": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "programCluster": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["traditional", "eco"],
+          "defaultValue": "[traditional|eco]"
+        },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["dashboard", "guided"],
+          "defaultValue": "[dashboard|guided]"
+        },
+        "programRules": {
+          "category": "rule",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": {
+            "opt2": {
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt3": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt4": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt5": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            }
+          }
+        },
+        "programType": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "WD"
+        },
+        "remainingTime": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "179"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "suggestedLoadD": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "RL100"
+        },
+        "temp": { "category": "general", "typology": "fixed", "mandatory": 1, "fixedValue": "45" },
+        "waterEfficiency": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "4"
+        },
+        "waterSaving": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "77"
+        }
+      },
+      "remainingTimes": { "extraDry": { "1": 189 }, "openDoor": { "1": 225 } }
+    },
+    "PROGRAMS.DW.STEAM": {
+      "description": "Suitable for washing pots and all other particularly dirty crockery.",
+      "protocolType": "MQTT",
+      "parameters": {
+        "checkUpStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1410",
+          "incrementValue": "30"
+        },
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "extraDry": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "openDoor": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "prCode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "23"
+        },
+        "prPosition": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "prStr": { "category": "command", "typology": "fixed", "mandatory": 1 }
+      },
+      "ancillaryParameters": {
+        "ecoIndex": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "ecoIndexOpt4": {
+          "category": "general",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["eyIxIjoxfQ=="]
+        },
+        "ecoIndexOpt5": {
+          "category": "general",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["eyIxIjoxLDV9"]
+        },
+        "energyLabel": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "1",
+          "minimumValue": "0,5",
+          "maximumValue": "5",
+          "incrementValue": "0"
+        },
+        "functionalId": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "programCluster": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "traditional"
+        },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["dashboard", "guided"],
+          "defaultValue": "[dashboard|guided]"
+        },
+        "programRules": {
+          "category": "rule",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": {
+            "opt2": {
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt3": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt4": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt5": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            }
+          }
+        },
+        "programType": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "WD"
+        },
+        "remainingTime": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "156"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "suggestedLoadD": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "RL100"
+        },
+        "temp": { "category": "general", "typology": "fixed", "mandatory": 1, "fixedValue": "75" },
+        "waterEfficiency": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "waterSaving": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "63"
+        }
+      },
+      "remainingTimes": { "extraDry": { "1": 140 }, "openDoor": { "1": 148 } }
+    },
+    "PROGRAMS.DW.SILENT_CARE": {
+      "description": "Quietest washing cycle. Ideal for functioning by night and for taking advantage of reduced energy fares.",
+      "protocolType": "MQTT",
+      "parameters": {
+        "checkUpStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1410",
+          "incrementValue": "30"
+        },
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "extraDry": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "openDoor": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "prCode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "17"
+        },
+        "prPosition": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "3"
+        },
+        "prStr": { "category": "command", "typology": "fixed", "mandatory": 1 }
+      },
+      "ancillaryParameters": {
+        "ecoIndex": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "ecoIndexOpt4": {
+          "category": "general",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["eyIxIjoxfQ=="]
+        },
+        "ecoIndexOpt5": {
+          "category": "general",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["eyIxIjozLDV9"]
+        },
+        "energyLabel": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "1",
+          "minimumValue": "0,5",
+          "maximumValue": "5",
+          "incrementValue": "0"
+        },
+        "functionalId": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "12"
+        },
+        "programCluster": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "traditional"
+        },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["dashboard"],
+          "defaultValue": "[dashboard]"
+        },
+        "programRules": {
+          "category": "rule",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": {
+            "opt2": {
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt3": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt4": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt5": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            }
+          }
+        },
+        "programType": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "WD"
+        },
+        "remainingTime": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "255"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "suggestedLoadD": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "RL100"
+        },
+        "temp": { "category": "general", "typology": "fixed", "mandatory": 1, "fixedValue": "55" },
+        "waterEfficiency": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "4"
+        },
+        "waterSaving": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "70"
+        }
+      },
+      "remainingTimes": { "openDoor": { "1": 245 } }
+    },
+    "PROGRAMS.DW.AUTO_UNIVERSAL_SOIL": {
+      "description": "Suitable for soiled pans and any other normally dirty items",
+      "protocolType": "MQTT",
+      "parameters": {
+        "checkUpStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1410",
+          "incrementValue": "30"
+        },
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "extraDry": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "openDoor": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "prCode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "15"
+        },
+        "prPosition": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "4"
+        },
+        "prStr": { "category": "command", "typology": "fixed", "mandatory": 1 }
+      },
+      "ancillaryParameters": {
+        "ecoIndex": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "ecoIndexOpt4": {
+          "category": "general",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["eyIxIjoyfQ=="]
+        },
+        "ecoIndexOpt5": {
+          "category": "general",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["eyIxIjo0LDV9"]
+        },
+        "energyLabel": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "2",
+          "minimumValue": "0,5",
+          "maximumValue": "5",
+          "incrementValue": "0"
+        },
+        "functionalId": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "3"
+        },
+        "powerWashPrz": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "programCluster": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "traditional"
+        },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["dashboard", "guided"],
+          "defaultValue": "[dashboard|guided]"
+        },
+        "programRules": {
+          "category": "rule",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": {
+            "opt2": {
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt3": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt4": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt5": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            }
+          }
+        },
+        "programType": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "WD"
+        },
+        "remainingTime": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "160",
+          "minimumValue": "145",
+          "maximumValue": "160",
+          "incrementValue": "15"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "soilSensor": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "suggestedLoadD": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "RL100"
+        },
+        "temp": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "60",
+          "minimumValue": "50",
+          "maximumValue": "60",
+          "incrementValue": "10"
+        },
+        "waterEfficiency": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "3"
+        },
+        "waterSaving": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "68"
+        }
+      },
+      "remainingTimes": { "extraDry": { "1": 133 }, "openDoor": { "1": 141 } }
+    },
+    "PROGRAMS.DW.IOT_TURBOPOWER": {
+      "description": "Deep washing, specific for very dirty dishes, such as pots, pans, casserole and dishes that have been sitting with dried food. Not recommended with delicate pieces.",
+      "protocolType": "MQTT",
+      "parameters": {
+        "checkUpStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1410",
+          "incrementValue": "30"
+        },
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "extraDry": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "openDoor": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "prCode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "23"
+        },
+        "prPosition": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "prStr": { "category": "command", "typology": "fixed", "mandatory": 1 }
+      },
+      "ancillaryParameters": {
+        "ecoIndex": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "ecoIndexOpt4": {
+          "category": "general",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["eyIxIjoxfQ=="]
+        },
+        "ecoIndexOpt5": {
+          "category": "general",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["eyIxIjoxLDV9"]
+        },
+        "energyLabel": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "1",
+          "minimumValue": "0,5",
+          "maximumValue": "5",
+          "incrementValue": "0"
+        },
+        "functionalId": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "programCluster": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "hygienePlus"
+        },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["download"],
+          "defaultValue": "[download]"
+        },
+        "programRules": {
+          "category": "rule",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": {
+            "opt2": {
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt3": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt4": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt5": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            },
+            "opt5": {
+              "opt2": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt3": { "1": { "typology": "fixed", "fixedValue": "0" } },
+              "opt4": { "1": { "typology": "fixed", "fixedValue": "0" } }
+            }
+          }
+        },
+        "programType": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "WD"
+        },
+        "remainingTime": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "156"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "suggestedLoadD": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "RL100"
+        },
+        "temp": { "category": "general", "typology": "fixed", "mandatory": 1, "fixedValue": "65" },
+        "waterEfficiency": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "waterSaving": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "63"
+        }
+      },
+      "remainingTimes": { "extraDry": { "1": 140 }, "openDoor": { "1": 148 } }
+    }
+  },
+  "options": {
+    "opt1": "threeInOne",
+    "opt2": "ecoExpress",
+    "opt3": "halfLoad",
+    "opt4": "extraDry",
+    "opt5": "openDoor",
+    "opt6": "addDish"
+  },
+  "dictionaryId": 131,
+  "resultCode": "0"
+}

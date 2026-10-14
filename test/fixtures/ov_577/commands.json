@@ -1,0 +1,627 @@
+{
+  "settings": {
+    "setConfig": {
+      "description": "The message allows to set platform parameters",
+      "protocolType": "MQTT",
+      "parameters": {
+        "httpEndpoint": { "category": "command", "typology": "fixed", "mandatory": 0 },
+        "mqttEndpoint": { "category": "command", "typology": "fixed", "mandatory": 0 }
+      }
+    },
+    "setParameters": {
+      "description": "The message allows to change parameters values to enable/disable specific features ",
+      "protocolType": "MQTT",
+      "parameters": {
+        "clockHH": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "23",
+          "incrementValue": "1"
+        },
+        "clockMM": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "59",
+          "incrementValue": "1"
+        },
+        "clockSS": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "59",
+          "incrementValue": "1"
+        },
+        "idEmployedProbe1": { "category": "command", "typology": "fixed", "mandatory": 0 },
+        "prTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "1",
+          "minimumValue": "1",
+          "maximumValue": "240",
+          "incrementValue": "1"
+        },
+        "tempSel": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "220",
+          "minimumValue": "50",
+          "maximumValue": "280",
+          "incrementValue": "5"
+        },
+        "tempSelEmployedProbe1": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "30",
+          "minimumValue": "30",
+          "maximumValue": "90",
+          "incrementValue": "1"
+        }
+      }
+    }
+  },
+  "stopProgram": {
+    "description": "The message allows to stop the program",
+    "protocolType": "MQTT",
+    "parameters": {
+      "onOffStatus": {
+        "category": "command",
+        "typology": "fixed",
+        "mandatory": 1,
+        "fixedValue": "0"
+      },
+      "recipeId": {
+        "category": "command",
+        "typology": "fixed",
+        "mandatory": 1,
+        "fixedValue": "NULL"
+      },
+      "recipeStep": {
+        "category": "command",
+        "typology": "fixed",
+        "mandatory": 1,
+        "fixedValue": "0"
+      }
+    }
+  },
+  "startProgram": {
+    "PROGRAMS.OV.IOT_RECIPE_BLACK_FOREST_CAKE": {
+      "description": "The command allows to start a program",
+      "protocolType": "MQTT",
+      "parameters": {
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prPosition": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "prCode": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "6" },
+        "tempSel": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "170"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1439",
+          "incrementValue": "1"
+        },
+        "prTime": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "40"
+        },
+        "preheatStatus": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "recipeId": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "893"
+        },
+        "recipeStep": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        }
+      },
+      "ancillaryParameters": {
+        "portion": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "4",
+          "minimumValue": "4",
+          "maximumValue": "8",
+          "incrementValue": "4"
+        },
+        "probe": { "category": "general", "typology": "fixed", "mandatory": 1, "fixedValue": "0" },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["recipe"],
+          "defaultValue": "[recipe]"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "0"
+        }
+      }
+    },
+    "PROGRAMS.OV.IOT_RECIPE_PISTACHIO_AND_ALMOND_CAKES": {
+      "description": "The command allows to start a program",
+      "protocolType": "MQTT",
+      "parameters": {
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prPosition": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "prCode": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "6" },
+        "tempSel": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "180"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1439",
+          "incrementValue": "1"
+        },
+        "prTime": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "40"
+        },
+        "preheatStatus": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "recipeId": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "283"
+        },
+        "recipeStep": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        }
+      },
+      "ancillaryParameters": {
+        "portion": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "4",
+          "minimumValue": "4",
+          "maximumValue": "8",
+          "incrementValue": "4"
+        },
+        "probe": { "category": "general", "typology": "fixed", "mandatory": 1, "fixedValue": "0" },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["recipe"],
+          "defaultValue": "[recipe]"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "0"
+        }
+      }
+    },
+    "PROGRAMS.OV.IOT_RECIPE_OATMEAL_COOKIES": {
+      "description": "The command allows to start a program",
+      "protocolType": "MQTT",
+      "parameters": {
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prPosition": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prCode": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "5" },
+        "tempSel": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "170"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1439",
+          "incrementValue": "1"
+        },
+        "prTime": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "20"
+        },
+        "preheatStatus": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "recipeId": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "282"
+        },
+        "recipeStep": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        }
+      },
+      "ancillaryParameters": {
+        "portion": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "4",
+          "minimumValue": "4",
+          "maximumValue": "8",
+          "incrementValue": "4"
+        },
+        "probe": { "category": "general", "typology": "fixed", "mandatory": 1, "fixedValue": "0" },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["recipe"],
+          "defaultValue": "[recipe]"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "0"
+        }
+      }
+    },
+    "PROGRAMS.OV.IOT_RECIPE_SHORTCRUST_PASTRY_WITHOUT_BUTTER": {
+      "description": "The command allows to start a program",
+      "protocolType": "MQTT",
+      "parameters": {
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prPosition": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prCode": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "5" },
+        "tempSel": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "170"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1439",
+          "incrementValue": "1"
+        },
+        "prTime": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "20"
+        },
+        "preheatStatus": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "recipeId": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "281"
+        },
+        "recipeStep": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        }
+      },
+      "ancillaryParameters": {
+        "portion": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "4",
+          "minimumValue": "4",
+          "maximumValue": "8",
+          "incrementValue": "4"
+        },
+        "probe": { "category": "general", "typology": "fixed", "mandatory": 1, "fixedValue": "0" },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["recipe"],
+          "defaultValue": "[recipe]"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "0"
+        }
+      }
+    },
+    "PROGRAMS.OV.IOT_GUIDED_YOGURT": {
+      "description": "The command allows to start a program",
+      "protocolType": "MQTT",
+      "parameters": {
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prPosition": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prCode": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "5" },
+        "tempSel": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "50"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1439",
+          "incrementValue": "1"
+        },
+        "prTime": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "240"
+        },
+        "recipeId": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "958"
+        },
+        "recipeStep": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        }
+      },
+      "ancillaryParameters": {
+        "probe": { "category": "general", "typology": "fixed", "mandatory": 1, "fixedValue": "0" },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["guided", "special"],
+          "defaultValue": "[guided|special]"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "0"
+        }
+      }
+    },
+    "PROGRAMS.OV.IOT_GUIDED_RICE_PIE": {
+      "description": "The command allows to start a program",
+      "protocolType": "MQTT",
+      "parameters": {
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prPosition": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prCode": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "5" },
+        "tempSel": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "180"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1439",
+          "incrementValue": "1"
+        },
+        "prTime": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "40"
+        },
+        "preheatStatus": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 0,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "recipeId": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "957"
+        },
+        "recipeStep": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        }
+      },
+      "ancillaryParameters": {
+        "probe": { "category": "general", "typology": "fixed", "mandatory": 1, "fixedValue": "0" },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["guided", "special"],
+          "defaultValue": "[guided|special]"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "0"
+        }
+      }
+    }
+  },
+  "options": {},
+  "dictionaryId": 59,
+  "resultCode": "0"
+}

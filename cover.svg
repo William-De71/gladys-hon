@@ -1,0 +1,95 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="534" viewBox="0 0 800 534">
+  <!-- Illustration only: no brand logo (hOn, Haier, Candy and Hoover are trademarks of their owners). -->
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#14263f"/>
+      <stop offset="1" stop-color="#1f4f7a"/>
+    </linearGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#dfe7ef"/>
+    </linearGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#9fd3f5"/>
+      <stop offset="1" stop-color="#3e86c4"/>
+    </linearGradient>
+    <clipPath id="drum"><circle cx="200" cy="338" r="58"/></clipPath>
+  </defs>
+  <rect width="800" height="534" fill="url(#bg)"/>
+
+  <!-- Cloud link -->
+  <g fill="none" stroke="#7cc3f0" stroke-opacity="0.35" stroke-width="3" stroke-dasharray="2 10" stroke-linecap="round">
+    <path d="M210 150 C 260 90, 330 80, 372 92"/>
+    <path d="M590 150 C 540 90, 470 80, 428 92"/>
+    <path d="M400 128 L 400 168"/>
+  </g>
+  <g transform="translate(400 78)">
+    <path d="M-62 26 a28 28 0 0 1 6 -55 a40 40 0 0 1 76 -6 a32 32 0 0 1 42 34 a26 26 0 0 1 -6 27 z"
+          fill="#ffffff" fill-opacity="0.92"/>
+    <path d="M-14 4 l10 10 l22 -24" fill="none" stroke="#2f6fb5" stroke-width="7"
+          stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <!-- Shadows -->
+  <g fill="#000000" opacity="0.25">
+    <ellipse cx="200" cy="452" rx="105" ry="12"/>
+    <ellipse cx="400" cy="452" rx="70" ry="10"/>
+    <ellipse cx="600" cy="452" rx="92" ry="12"/>
+  </g>
+
+  <!-- Washing machine -->
+  <g>
+    <rect x="100" y="190" width="200" height="255" rx="18" fill="url(#body)"/>
+    <rect x="100" y="190" width="200" height="50" rx="18" fill="#eef3f8"/>
+    <rect x="100" y="222" width="200" height="18" fill="#eef3f8"/>
+    <line x1="100" y1="240" x2="300" y2="240" stroke="#c7d3de" stroke-width="2"/>
+    <circle cx="132" cy="215" r="11" fill="#d5dee7" stroke="#aebccb" stroke-width="2"/>
+    <rect x="160" y="206" width="70" height="18" rx="5" fill="#1f3550"/>
+    <text x="195" y="220" text-anchor="middle" font-family="DejaVu Sans Mono, monospace" font-size="13"
+          fill="#7fe0a6">0:42</text>
+    <circle cx="252" cy="215" r="6" fill="#7fe0a6"/>
+    <circle cx="276" cy="215" r="6" fill="#c7d3de"/>
+    <circle cx="200" cy="338" r="76" fill="#d5dee7" stroke="#aebccb" stroke-width="3"/>
+    <circle cx="200" cy="338" r="58" fill="url(#glass)"/>
+    <path d="M140 352 q30 -22 60 0 t60 0 v60 h-120 z" fill="#ffffff" fill-opacity="0.35" clip-path="url(#drum)"/>
+    <path d="M172 300 a40 40 0 0 1 30 -12" fill="none" stroke="#ffffff" stroke-opacity="0.7"
+          stroke-width="6" stroke-linecap="round"/>
+  </g>
+
+  <!-- Air conditioner -->
+  <g>
+    <rect x="320" y="190" width="160" height="70" rx="18" fill="url(#body)"/>
+    <rect x="336" y="238" width="128" height="8" rx="4" fill="#c7d3de"/>
+    <circle cx="455" cy="210" r="5" fill="#7cc3f0"/>
+    <text x="352" y="220" font-family="DejaVu Sans, sans-serif" font-size="18" font-weight="bold"
+          fill="#2f6fb5">22°</text>
+    <g fill="none" stroke="#9fd3f5" stroke-width="5" stroke-linecap="round" opacity="0.85">
+      <path d="M350 282 q10 14 0 28 t0 28"/>
+      <path d="M400 282 q10 14 0 28 t0 28"/>
+      <path d="M450 282 q10 14 0 28 t0 28"/>
+    </g>
+    <!-- Dishwasher below -->
+    <rect x="335" y="355" width="130" height="90" rx="12" fill="url(#body)"/>
+    <rect x="335" y="355" width="130" height="22" rx="10" fill="#eef3f8"/>
+    <rect x="380" y="362" width="40" height="8" rx="4" fill="#1f3550"/>
+    <rect x="370" y="392" width="60" height="8" rx="4" fill="#c7d3de"/>
+  </g>
+
+  <!-- Fridge -->
+  <g>
+    <rect x="525" y="150" width="150" height="295" rx="18" fill="url(#body)"/>
+    <line x1="525" y1="262" x2="675" y2="262" stroke="#c7d3de" stroke-width="3"/>
+    <rect x="545" y="180" width="8" height="58" rx="4" fill="#aebccb"/>
+    <rect x="545" y="285" width="8" height="90" rx="4" fill="#aebccb"/>
+    <rect x="590" y="178" width="66" height="32" rx="7" fill="#1f3550"/>
+    <text x="623" y="200" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="15"
+          fill="#9fd3f5">4 °C</text>
+    <g stroke="#9fd3f5" stroke-width="3" stroke-linecap="round">
+      <path d="M623 300 v40 M606 310 l34 20 M640 310 l-34 20"/>
+    </g>
+  </g>
+
+  <!-- Title -->
+  <text x="400" y="505" text-anchor="middle" font-family="DejaVu Sans, sans-serif" font-size="30"
+        font-weight="bold" fill="#ffffff">hOn for Gladys</text>
+</svg>

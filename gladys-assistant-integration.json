@@ -1,0 +1,1211 @@
+{
+  "manifest_version": 1,
+  "type": "device",
+  "name": "hOn",
+  "description": {
+    "en": "Haier, Candy and Hoover appliances of the hOn app: washers, dryers, AC, fridges, ovens.",
+    "fr": "Appareils Haier, Candy et Hoover de l’app hOn : lave-linge, sèche-linge, clim, frigo, four.",
+    "de": "Haier-, Candy- und Hoover-Geräte der hOn-App: Waschmaschinen, Trockner, Klima, Kühlschränke.",
+    "es": "Electrodomésticos Haier, Candy y Hoover de la app hOn: lavadoras, secadoras, aire, neveras."
+  },
+  "version": "0.1.0",
+  "docker_image": "ghcr.io/william-de71/gladys-hon:0.1.0",
+  "gladys_version": ">=5.1.1",
+  "cover_image": "https://raw.githubusercontent.com/William-De71/gladys-hon/main/cover.jpg",
+  "categories": ["appliances", "climate"],
+  "transports": ["cloud"],
+  "actions": [
+    {
+      "key": "test_connection",
+      "timeout_seconds": 60,
+      "label": {
+        "en": "Test the connection",
+        "fr": "Tester la connexion",
+        "de": "Verbindung testen",
+        "es": "Probar la conexión"
+      },
+      "description": {
+        "en": "Logs in to the hOn cloud and lists the appliances of the account with their state.",
+        "fr": "Se connecte au cloud hOn et liste les appareils du compte avec leur état.",
+        "de": "Meldet sich bei der hOn-Cloud an und listet die Geräte des Kontos mit ihrem Zustand auf.",
+        "es": "Inicia sesión en la nube hOn y lista los electrodomésticos de la cuenta con su estado."
+      }
+    },
+    {
+      "key": "list_programs",
+      "timeout_seconds": 60,
+      "label": {
+        "en": "List the programs",
+        "fr": "Lister les programmes",
+        "de": "Programme auflisten",
+        "es": "Listar los programas"
+      },
+      "description": {
+        "en": "Names of the programs each washing machine, dryer or dishwasher can start remotely, for the “Start a program” scene action.",
+        "fr": "Noms des programmes que chaque lave-linge, sèche-linge ou lave-vaisselle peut lancer à distance, pour l’action de scène « Lancer un programme ».",
+        "de": "Namen der Programme, die jede Waschmaschine, jeder Trockner oder Geschirrspüler aus der Ferne starten kann, für die Szenenaktion „Programm starten“.",
+        "es": "Nombres de los programas que cada lavadora, secadora o lavavajillas puede iniciar a distancia, para la acción de escena «Iniciar un programa»."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Appliance",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Electrodoméstico"
+          },
+          "description": {
+            "en": "Empty: every appliance created in Gladys.",
+            "fr": "Vide : tous les appareils créés dans Gladys.",
+            "de": "Leer: alle in Gladys angelegten Geräte.",
+            "es": "Vacío: todos los electrodomésticos creados en Gladys."
+          }
+        }
+      ]
+    }
+  ],
+  "config_schema": [
+    {
+      "key": "intro",
+      "type": "section",
+      "label": {
+        "en": "Connect Gladys to your hOn account",
+        "fr": "Connecter Gladys à votre compte hOn",
+        "de": "Gladys mit Ihrem hOn-Konto verbinden",
+        "es": "Conectar Gladys a su cuenta hOn"
+      },
+      "description": {
+        "en": "Use the account of the hOn mobile app, where your Haier, Candy or Hoover appliances are already added. Gladys talks to the hOn cloud (an unofficial API, the one of the app): your appliances and their states go through Haier’s servers. Then add the appliances from the Discover tab.",
+        "fr": "Utilisez le compte de l’application mobile hOn, où vos appareils Haier, Candy ou Hoover sont déjà ajoutés. Gladys dialogue avec le cloud hOn (une API non officielle, celle de l’application) : vos appareils et leurs états passent par les serveurs de Haier. Ajoutez ensuite les appareils depuis l’onglet Découverte.",
+        "de": "Verwenden Sie das Konto der mobilen hOn-App, in der Ihre Haier-, Candy- oder Hoover-Geräte bereits hinzugefügt sind. Gladys kommuniziert mit der hOn-Cloud (eine inoffizielle API, die der App): Ihre Geräte und deren Zustände laufen über die Server von Haier. Fügen Sie die Geräte anschließend im Tab Entdecken hinzu.",
+        "es": "Use la cuenta de la aplicación móvil hOn, donde ya ha añadido sus electrodomésticos Haier, Candy o Hoover. Gladys se comunica con la nube hOn (una API no oficial, la de la aplicación): sus electrodomésticos y sus estados pasan por los servidores de Haier. Después, añádalos desde la pestaña Descubrir."
+      }
+    },
+    {
+      "key": "email",
+      "type": "string",
+      "required": true,
+      "label": {
+        "en": "hOn e-mail address",
+        "fr": "Adresse e-mail hOn",
+        "de": "hOn-E-Mail-Adresse",
+        "es": "Correo electrónico de hOn"
+      },
+      "placeholder": {
+        "en": "name@example.com",
+        "fr": "nom@exemple.fr",
+        "de": "name@beispiel.de",
+        "es": "nombre@ejemplo.es"
+      }
+    },
+    {
+      "key": "password",
+      "type": "secret",
+      "required": true,
+      "label": {
+        "en": "hOn password",
+        "fr": "Mot de passe hOn",
+        "de": "hOn-Passwort",
+        "es": "Contraseña de hOn"
+      },
+      "description": {
+        "en": "Stored by Gladys and only sent to the hOn cloud. Accounts with two-step verification by e-mail are not supported.",
+        "fr": "Conservé par Gladys et envoyé uniquement au cloud hOn. Les comptes avec vérification en deux étapes par e-mail ne sont pas pris en charge.",
+        "de": "Wird von Gladys gespeichert und nur an die hOn-Cloud gesendet. Konten mit Zwei-Schritt-Bestätigung per E-Mail werden nicht unterstützt.",
+        "es": "Gladys lo guarda y solo lo envía a la nube hOn. Las cuentas con verificación en dos pasos por correo no son compatibles."
+      }
+    },
+    {
+      "key": "poll_interval",
+      "type": "select",
+      "default": "60",
+      "label": {
+        "en": "Refresh interval",
+        "fr": "Intervalle d’actualisation",
+        "de": "Aktualisierungsintervall",
+        "es": "Intervalo de actualización"
+      },
+      "description": {
+        "en": "How often the state of the appliances is read from the hOn cloud.",
+        "fr": "Fréquence de lecture de l’état des appareils sur le cloud hOn.",
+        "de": "Wie oft der Zustand der Geräte aus der hOn-Cloud gelesen wird.",
+        "es": "Con qué frecuencia se lee el estado de los electrodomésticos en la nube hOn."
+      },
+      "options": [
+        {
+          "value": "30",
+          "label": {
+            "en": "30 seconds",
+            "fr": "30 secondes",
+            "de": "30 Sekunden",
+            "es": "30 segundos"
+          }
+        },
+        {
+          "value": "60",
+          "label": {
+            "en": "1 minute",
+            "fr": "1 minute",
+            "de": "1 Minute",
+            "es": "1 minuto"
+          }
+        },
+        {
+          "value": "120",
+          "label": {
+            "en": "2 minutes",
+            "fr": "2 minutes",
+            "de": "2 Minuten",
+            "es": "2 minutos"
+          }
+        },
+        {
+          "value": "300",
+          "label": {
+            "en": "5 minutes",
+            "fr": "5 minutes",
+            "de": "5 Minuten",
+            "es": "5 minutos"
+          }
+        }
+      ]
+    },
+    {
+      "key": "language",
+      "type": "select",
+      "default": "en",
+      "label": {
+        "en": "Language of the device texts",
+        "fr": "Langue des textes des appareils",
+        "de": "Sprache der Gerätetexte",
+        "es": "Idioma de los textos de los dispositivos"
+      },
+      "description": {
+        "en": "Feature names and text states (machine state, phase). Gladys does not send your language with them.",
+        "fr": "Noms des fonctionnalités et états texte (état de la machine, phase). Gladys n’envoie pas votre langue avec eux.",
+        "de": "Funktionsnamen und Textzustände (Gerätezustand, Phase). Gladys übermittelt Ihre Sprache dabei nicht.",
+        "es": "Nombres de las funciones y estados de texto (estado de la máquina, fase). Gladys no envía su idioma con ellos."
+      },
+      "options": [
+        {
+          "value": "en",
+          "label": {
+            "en": "English",
+            "fr": "Anglais",
+            "de": "Englisch",
+            "es": "Inglés"
+          }
+        },
+        {
+          "value": "fr",
+          "label": {
+            "en": "French",
+            "fr": "Français",
+            "de": "Französisch",
+            "es": "Francés"
+          }
+        },
+        {
+          "value": "de",
+          "label": {
+            "en": "German",
+            "fr": "Allemand",
+            "de": "Deutsch",
+            "es": "Alemán"
+          }
+        },
+        {
+          "value": "es",
+          "label": {
+            "en": "Spanish",
+            "fr": "Espagnol",
+            "de": "Spanisch",
+            "es": "Español"
+          }
+        }
+      ]
+    },
+    {
+      "key": "remote_help",
+      "type": "section",
+      "label": {
+        "en": "Starting a program from Gladys",
+        "fr": "Lancer un programme depuis Gladys",
+        "de": "Ein Programm aus Gladys starten",
+        "es": "Iniciar un programa desde Gladys"
+      },
+      "description": {
+        "en": "Like in the hOn app, a washing machine, dryer or dishwasher only accepts a start, a pause or a stop when remote control is enabled on its panel (load it, close the door, then press the remote control or Wi-Fi button). The “Remote control” feature of the device shows it.",
+        "fr": "Comme dans l’application hOn, un lave-linge, un sèche-linge ou un lave-vaisselle n’accepte un démarrage, une pause ou un arrêt que si le contrôle à distance est activé sur son panneau (chargez-le, fermez la porte, puis appuyez sur la touche contrôle à distance ou Wi-Fi). La fonctionnalité « Contrôle à distance » de l’appareil l’indique.",
+        "de": "Wie in der hOn-App nimmt eine Waschmaschine, ein Trockner oder ein Geschirrspüler einen Start, eine Pause oder einen Stopp nur an, wenn die Fernsteuerung am Bedienfeld aktiviert ist (beladen, Tür schließen, dann die Fernsteuerungs- oder WLAN-Taste drücken). Die Funktion „Fernsteuerung“ des Geräts zeigt es an.",
+        "es": "Como en la app hOn, una lavadora, secadora o lavavajillas solo acepta un inicio, una pausa o una parada si el control remoto está activado en su panel (cárguela, cierre la puerta y pulse la tecla de control remoto o Wi-Fi). La función «Control remoto» del dispositivo lo indica."
+      }
+    }
+  ],
+  "widgets": [
+    {
+      "key": "appliances",
+      "icon": "grid",
+      "action_timeout_seconds": 60,
+      "label": {
+        "en": "hOn appliances",
+        "fr": "Appareils hOn",
+        "de": "hOn-Geräte",
+        "es": "Electrodomésticos hOn"
+      },
+      "description": {
+        "en": "State, phase and time left of every appliance of the hOn account.",
+        "fr": "État, phase et temps restant de chaque appareil du compte hOn.",
+        "de": "Zustand, Phase und Restzeit aller Geräte des hOn-Kontos.",
+        "es": "Estado, fase y tiempo restante de cada electrodoméstico de la cuenta hOn."
+      },
+      "settings": [
+        {
+          "key": "show",
+          "type": "select",
+          "default": "all",
+          "label": {
+            "en": "Appliances shown",
+            "fr": "Appareils affichés",
+            "de": "Angezeigte Geräte",
+            "es": "Electrodomésticos mostrados"
+          },
+          "options": [
+            {
+              "value": "all",
+              "label": {
+                "en": "All",
+                "fr": "Tous",
+                "de": "Alle",
+                "es": "Todos"
+              }
+            },
+            {
+              "value": "active",
+              "label": {
+                "en": "Only those running",
+                "fr": "Seulement ceux en fonctionnement",
+                "de": "Nur die laufenden",
+                "es": "Solo los que están en marcha"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "appliance",
+      "icon": "disc",
+      "action_timeout_seconds": 30,
+      "label": {
+        "en": "hOn appliance",
+        "fr": "Appareil hOn",
+        "de": "hOn-Gerät",
+        "es": "Electrodoméstico hOn"
+      },
+      "description": {
+        "en": "One appliance: state, progress of the cycle, temperatures, pause, resume and stop buttons.",
+        "fr": "Un appareil : état, avancement du cycle, températures, boutons pause, reprise et arrêt.",
+        "de": "Ein Gerät: Zustand, Fortschritt des Programms, Temperaturen, Tasten Pause, Fortsetzen und Stopp.",
+        "es": "Un electrodoméstico: estado, progreso del ciclo, temperaturas, botones de pausa, reanudar y detener."
+      },
+      "settings": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": true,
+          "label": {
+            "en": "Appliance",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Electrodoméstico"
+          }
+        }
+      ]
+    }
+  ],
+  "scene_triggers": [
+    {
+      "key": "cycle_started",
+      "label": {
+        "en": "An hOn cycle starts",
+        "fr": "Un cycle hOn démarre",
+        "de": "Ein hOn-Programm startet",
+        "es": "Empieza un ciclo hOn"
+      },
+      "description": {
+        "en": "A washing machine, dryer or dishwasher starts a program.",
+        "fr": "Un lave-linge, sèche-linge ou lave-vaisselle lance un programme.",
+        "de": "Eine Waschmaschine, ein Trockner oder Geschirrspüler startet ein Programm.",
+        "es": "Una lavadora, secadora o lavavajillas inicia un programa."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Appliance",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Electrodoméstico"
+          },
+          "description": {
+            "en": "Empty: any hOn appliance.",
+            "fr": "Vide : n’importe quel appareil hOn.",
+            "de": "Leer: jedes hOn-Gerät.",
+            "es": "Vacío: cualquier electrodoméstico hOn."
+          }
+        },
+        {
+          "key": "appliance_type",
+          "type": "select",
+          "label": {
+            "en": "Type of appliance",
+            "fr": "Type d’appareil",
+            "de": "Gerätetyp",
+            "es": "Tipo de electrodoméstico"
+          },
+          "options": [
+            {
+              "value": "washing_machine",
+              "label": {
+                "en": "Washing machine",
+                "fr": "Lave-linge",
+                "de": "Waschmaschine",
+                "es": "Lavadora"
+              }
+            },
+            {
+              "value": "washer_dryer",
+              "label": {
+                "en": "Washer dryer",
+                "fr": "Lave-linge séchant",
+                "de": "Waschtrockner",
+                "es": "Lavadora secadora"
+              }
+            },
+            {
+              "value": "tumble_dryer",
+              "label": {
+                "en": "Tumble dryer",
+                "fr": "Sèche-linge",
+                "de": "Wäschetrockner",
+                "es": "Secadora"
+              }
+            },
+            {
+              "value": "dishwasher",
+              "label": {
+                "en": "Dishwasher",
+                "fr": "Lave-vaisselle",
+                "de": "Geschirrspüler",
+                "es": "Lavavajillas"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "device_name",
+          "type": "string",
+          "label": {
+            "en": "Appliance name",
+            "fr": "Nom de l’appareil",
+            "de": "Gerätename",
+            "es": "Nombre del electrodoméstico"
+          }
+        },
+        {
+          "key": "appliance_type",
+          "type": "string",
+          "label": {
+            "en": "Type of appliance",
+            "fr": "Type d’appareil",
+            "de": "Gerätetyp",
+            "es": "Tipo de electrodoméstico"
+          },
+          "description": {
+            "en": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "fr": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "de": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "es": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…"
+          }
+        },
+        {
+          "key": "program",
+          "type": "string",
+          "label": {
+            "en": "Program",
+            "fr": "Programme",
+            "de": "Programm",
+            "es": "Programa"
+          },
+          "description": {
+            "en": "Program name, as listed by “List the programs” (empty when unknown).",
+            "fr": "Nom du programme, comme listé par « Lister les programmes » (vide si inconnu).",
+            "de": "Programmname, wie von „Programme auflisten“ aufgeführt (leer, wenn unbekannt).",
+            "es": "Nombre del programa, como lo lista «Listar los programas» (vacío si se desconoce)."
+          }
+        },
+        {
+          "key": "remaining_minutes",
+          "type": "number",
+          "label": {
+            "en": "Minutes left",
+            "fr": "Minutes restantes",
+            "de": "Verbleibende Minuten",
+            "es": "Minutos restantes"
+          }
+        }
+      ]
+    },
+    {
+      "key": "cycle_finished",
+      "label": {
+        "en": "An hOn cycle is finished",
+        "fr": "Un cycle hOn est terminé",
+        "de": "Ein hOn-Programm ist beendet",
+        "es": "Termina un ciclo hOn"
+      },
+      "description": {
+        "en": "The laundry or the dishes are ready.",
+        "fr": "Le linge ou la vaisselle est prêt.",
+        "de": "Die Wäsche oder das Geschirr ist fertig.",
+        "es": "La ropa o la vajilla está lista."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Appliance",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Electrodoméstico"
+          },
+          "description": {
+            "en": "Empty: any hOn appliance.",
+            "fr": "Vide : n’importe quel appareil hOn.",
+            "de": "Leer: jedes hOn-Gerät.",
+            "es": "Vacío: cualquier electrodoméstico hOn."
+          }
+        },
+        {
+          "key": "appliance_type",
+          "type": "select",
+          "label": {
+            "en": "Type of appliance",
+            "fr": "Type d’appareil",
+            "de": "Gerätetyp",
+            "es": "Tipo de electrodoméstico"
+          },
+          "options": [
+            {
+              "value": "washing_machine",
+              "label": {
+                "en": "Washing machine",
+                "fr": "Lave-linge",
+                "de": "Waschmaschine",
+                "es": "Lavadora"
+              }
+            },
+            {
+              "value": "washer_dryer",
+              "label": {
+                "en": "Washer dryer",
+                "fr": "Lave-linge séchant",
+                "de": "Waschtrockner",
+                "es": "Lavadora secadora"
+              }
+            },
+            {
+              "value": "tumble_dryer",
+              "label": {
+                "en": "Tumble dryer",
+                "fr": "Sèche-linge",
+                "de": "Wäschetrockner",
+                "es": "Secadora"
+              }
+            },
+            {
+              "value": "dishwasher",
+              "label": {
+                "en": "Dishwasher",
+                "fr": "Lave-vaisselle",
+                "de": "Geschirrspüler",
+                "es": "Lavavajillas"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "device_name",
+          "type": "string",
+          "label": {
+            "en": "Appliance name",
+            "fr": "Nom de l’appareil",
+            "de": "Gerätename",
+            "es": "Nombre del electrodoméstico"
+          }
+        },
+        {
+          "key": "appliance_type",
+          "type": "string",
+          "label": {
+            "en": "Type of appliance",
+            "fr": "Type d’appareil",
+            "de": "Gerätetyp",
+            "es": "Tipo de electrodoméstico"
+          },
+          "description": {
+            "en": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "fr": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "de": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "es": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…"
+          }
+        },
+        {
+          "key": "program",
+          "type": "string",
+          "label": {
+            "en": "Program",
+            "fr": "Programme",
+            "de": "Programm",
+            "es": "Programa"
+          },
+          "description": {
+            "en": "Program name, as listed by “List the programs” (empty when unknown).",
+            "fr": "Nom du programme, comme listé par « Lister les programmes » (vide si inconnu).",
+            "de": "Programmname, wie von „Programme auflisten“ aufgeführt (leer, wenn unbekannt).",
+            "es": "Nombre del programa, como lo lista «Listar los programas» (vacío si se desconoce)."
+          }
+        },
+        {
+          "key": "duration_minutes",
+          "type": "number",
+          "label": {
+            "en": "Duration (minutes)",
+            "fr": "Durée (minutes)",
+            "de": "Dauer (Minuten)",
+            "es": "Duración (minutos)"
+          },
+          "description": {
+            "en": "Empty when the start was not seen.",
+            "fr": "Vide si le démarrage n’a pas été vu.",
+            "de": "Leer, wenn der Start nicht beobachtet wurde.",
+            "es": "Vacío si no se vio el inicio."
+          }
+        }
+      ]
+    },
+    {
+      "key": "appliance_error",
+      "label": {
+        "en": "An hOn appliance reports an error",
+        "fr": "Un appareil hOn signale une erreur",
+        "de": "Ein hOn-Gerät meldet einen Fehler",
+        "es": "Un electrodoméstico hOn indica un error"
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Appliance",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Electrodoméstico"
+          },
+          "description": {
+            "en": "Empty: any hOn appliance.",
+            "fr": "Vide : n’importe quel appareil hOn.",
+            "de": "Leer: jedes hOn-Gerät.",
+            "es": "Vacío: cualquier electrodoméstico hOn."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "device_name",
+          "type": "string",
+          "label": {
+            "en": "Appliance name",
+            "fr": "Nom de l’appareil",
+            "de": "Gerätename",
+            "es": "Nombre del electrodoméstico"
+          }
+        },
+        {
+          "key": "appliance_type",
+          "type": "string",
+          "label": {
+            "en": "Type of appliance",
+            "fr": "Type d’appareil",
+            "de": "Gerätetyp",
+            "es": "Tipo de electrodoméstico"
+          },
+          "description": {
+            "en": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "fr": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "de": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "es": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…"
+          }
+        },
+        {
+          "key": "error_code",
+          "type": "string",
+          "label": {
+            "en": "Error code",
+            "fr": "Code d’erreur",
+            "de": "Fehlercode",
+            "es": "Código de error"
+          }
+        }
+      ]
+    },
+    {
+      "key": "refill_needed",
+      "label": {
+        "en": "An hOn appliance needs a refill",
+        "fr": "Un appareil hOn doit être rempli",
+        "de": "Ein hOn-Gerät muss nachgefüllt werden",
+        "es": "Un electrodoméstico hOn necesita recarga"
+      },
+      "description": {
+        "en": "Salt, rinse aid, detergent or softener.",
+        "fr": "Sel, liquide de rinçage, lessive ou adoucissant.",
+        "de": "Salz, Klarspüler, Waschmittel oder Weichspüler.",
+        "es": "Sal, abrillantador, detergente o suavizante."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Appliance",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Electrodoméstico"
+          },
+          "description": {
+            "en": "Empty: any hOn appliance.",
+            "fr": "Vide : n’importe quel appareil hOn.",
+            "de": "Leer: jedes hOn-Gerät.",
+            "es": "Vacío: cualquier electrodoméstico hOn."
+          }
+        },
+        {
+          "key": "item",
+          "type": "select",
+          "label": {
+            "en": "What to refill",
+            "fr": "À remplir",
+            "de": "Nachzufüllen",
+            "es": "Qué recargar"
+          },
+          "options": [
+            {
+              "value": "salt",
+              "label": {
+                "en": "Salt",
+                "fr": "Sel",
+                "de": "Salz",
+                "es": "Sal"
+              }
+            },
+            {
+              "value": "rinse_aid",
+              "label": {
+                "en": "Rinse aid",
+                "fr": "Liquide de rinçage",
+                "de": "Klarspüler",
+                "es": "Abrillantador"
+              }
+            },
+            {
+              "value": "detergent",
+              "label": {
+                "en": "Detergent",
+                "fr": "Lessive",
+                "de": "Waschmittel",
+                "es": "Detergente"
+              }
+            },
+            {
+              "value": "softener",
+              "label": {
+                "en": "Softener",
+                "fr": "Adoucissant",
+                "de": "Weichspüler",
+                "es": "Suavizante"
+              }
+            }
+          ]
+        }
+      ],
+      "variables": [
+        {
+          "key": "device_name",
+          "type": "string",
+          "label": {
+            "en": "Appliance name",
+            "fr": "Nom de l’appareil",
+            "de": "Gerätename",
+            "es": "Nombre del electrodoméstico"
+          }
+        },
+        {
+          "key": "appliance_type",
+          "type": "string",
+          "label": {
+            "en": "Type of appliance",
+            "fr": "Type d’appareil",
+            "de": "Gerätetyp",
+            "es": "Tipo de electrodoméstico"
+          },
+          "description": {
+            "en": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "fr": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "de": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "es": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…"
+          }
+        },
+        {
+          "key": "item",
+          "type": "string",
+          "label": {
+            "en": "What to refill",
+            "fr": "À remplir",
+            "de": "Nachzufüllen",
+            "es": "Qué recargar"
+          },
+          "description": {
+            "en": "salt, rinse_aid, detergent or softener",
+            "fr": "salt, rinse_aid, detergent ou softener",
+            "de": "salt, rinse_aid, detergent oder softener",
+            "es": "salt, rinse_aid, detergent o softener"
+          }
+        }
+      ]
+    },
+    {
+      "key": "appliance_offline",
+      "label": {
+        "en": "An hOn appliance goes offline",
+        "fr": "Un appareil hOn se déconnecte",
+        "de": "Ein hOn-Gerät geht offline",
+        "es": "Un electrodoméstico hOn se desconecta"
+      },
+      "description": {
+        "en": "It no longer reaches the hOn cloud (power cut, Wi-Fi).",
+        "fr": "Il ne joint plus le cloud hOn (coupure de courant, Wi-Fi).",
+        "de": "Es erreicht die hOn-Cloud nicht mehr (Stromausfall, WLAN).",
+        "es": "Ya no llega a la nube hOn (corte de luz, Wi-Fi)."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Appliance",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Electrodoméstico"
+          },
+          "description": {
+            "en": "Empty: any hOn appliance.",
+            "fr": "Vide : n’importe quel appareil hOn.",
+            "de": "Leer: jedes hOn-Gerät.",
+            "es": "Vacío: cualquier electrodoméstico hOn."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "device_name",
+          "type": "string",
+          "label": {
+            "en": "Appliance name",
+            "fr": "Nom de l’appareil",
+            "de": "Gerätename",
+            "es": "Nombre del electrodoméstico"
+          }
+        },
+        {
+          "key": "appliance_type",
+          "type": "string",
+          "label": {
+            "en": "Type of appliance",
+            "fr": "Type d’appareil",
+            "de": "Gerätetyp",
+            "es": "Tipo de electrodoméstico"
+          },
+          "description": {
+            "en": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "fr": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "de": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "es": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…"
+          }
+        }
+      ]
+    },
+    {
+      "key": "appliance_online",
+      "label": {
+        "en": "An hOn appliance is back online",
+        "fr": "Un appareil hOn se reconnecte",
+        "de": "Ein hOn-Gerät ist wieder online",
+        "es": "Un electrodoméstico hOn vuelve a conectarse"
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "label": {
+            "en": "Appliance",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Electrodoméstico"
+          },
+          "description": {
+            "en": "Empty: any hOn appliance.",
+            "fr": "Vide : n’importe quel appareil hOn.",
+            "de": "Leer: jedes hOn-Gerät.",
+            "es": "Vacío: cualquier electrodoméstico hOn."
+          }
+        }
+      ],
+      "variables": [
+        {
+          "key": "device_name",
+          "type": "string",
+          "label": {
+            "en": "Appliance name",
+            "fr": "Nom de l’appareil",
+            "de": "Gerätename",
+            "es": "Nombre del electrodoméstico"
+          }
+        },
+        {
+          "key": "appliance_type",
+          "type": "string",
+          "label": {
+            "en": "Type of appliance",
+            "fr": "Type d’appareil",
+            "de": "Gerätetyp",
+            "es": "Tipo de electrodoméstico"
+          },
+          "description": {
+            "en": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "fr": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "de": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…",
+            "es": "washing_machine, tumble_dryer, dishwasher, air_conditioner, fridge…"
+          }
+        }
+      ]
+    },
+    {
+      "key": "account_error",
+      "label": {
+        "en": "The hOn account is refused",
+        "fr": "Le compte hOn est refusé",
+        "de": "Das hOn-Konto wird abgelehnt",
+        "es": "Se rechaza la cuenta hOn"
+      },
+      "description": {
+        "en": "The hOn cloud refuses the e-mail address or the password: Gladys no longer receives the states.",
+        "fr": "Le cloud hOn refuse l’adresse e-mail ou le mot de passe : Gladys ne reçoit plus les états.",
+        "de": "Die hOn-Cloud lehnt die E-Mail-Adresse oder das Passwort ab: Gladys erhält keine Zustände mehr.",
+        "es": "La nube hOn rechaza el correo o la contraseña: Gladys deja de recibir los estados."
+      },
+      "variables": [
+        {
+          "key": "reason",
+          "type": "string",
+          "label": {
+            "en": "Reason",
+            "fr": "Raison",
+            "de": "Grund",
+            "es": "Motivo"
+          }
+        }
+      ]
+    }
+  ],
+  "scene_actions": [
+    {
+      "key": "start_program",
+      "timeout_seconds": 30,
+      "label": {
+        "en": "Start an hOn program",
+        "fr": "Lancer un programme hOn",
+        "de": "hOn-Programm starten",
+        "es": "Iniciar un programa hOn"
+      },
+      "description": {
+        "en": "Washing machine, dryer or dishwasher, with remote control enabled on the appliance.",
+        "fr": "Lave-linge, sèche-linge ou lave-vaisselle, avec le contrôle à distance activé sur l’appareil.",
+        "de": "Waschmaschine, Trockner oder Geschirrspüler, mit aktivierter Fernsteuerung am Gerät.",
+        "es": "Lavadora, secadora o lavavajillas, con el control remoto activado en el electrodoméstico."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": true,
+          "label": {
+            "en": "Appliance",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Electrodoméstico"
+          }
+        },
+        {
+          "key": "program",
+          "type": "string",
+          "required": true,
+          "label": {
+            "en": "Program",
+            "fr": "Programme",
+            "de": "Programm",
+            "es": "Programa"
+          },
+          "placeholder": {
+            "en": "cottons",
+            "fr": "cottons",
+            "de": "cottons",
+            "es": "cottons"
+          },
+          "description": {
+            "en": "Name given by the “List the programs” button of the configuration.",
+            "fr": "Nom donné par le bouton « Lister les programmes » de la configuration.",
+            "de": "Name, den die Schaltfläche „Programme auflisten“ der Konfiguration angibt.",
+            "es": "Nombre que da el botón «Listar los programas» de la configuración."
+          }
+        },
+        {
+          "key": "delay_minutes",
+          "type": "number",
+          "min": 0,
+          "max": 1440,
+          "label": {
+            "en": "Delayed start (minutes)",
+            "fr": "Départ différé (minutes)",
+            "de": "Startzeitvorwahl (Minuten)",
+            "es": "Inicio diferido (minutos)"
+          },
+          "description": {
+            "en": "Empty or 0: start now. Only if the program offers it.",
+            "fr": "Vide ou 0 : démarrage immédiat. Seulement si le programme le propose.",
+            "de": "Leer oder 0: sofort starten. Nur wenn das Programm es anbietet.",
+            "es": "Vacío o 0: inicio inmediato. Solo si el programa lo ofrece."
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "key": "program",
+          "type": "string",
+          "label": {
+            "en": "Program started",
+            "fr": "Programme lancé",
+            "de": "Gestartetes Programm",
+            "es": "Programa iniciado"
+          }
+        },
+        {
+          "key": "estimated_minutes",
+          "type": "number",
+          "label": {
+            "en": "Estimated duration (minutes)",
+            "fr": "Durée estimée (minutes)",
+            "de": "Geschätzte Dauer (Minuten)",
+            "es": "Duración estimada (minutos)"
+          }
+        }
+      ]
+    },
+    {
+      "key": "control_cycle",
+      "timeout_seconds": 30,
+      "label": {
+        "en": "Pause, resume or stop an hOn cycle",
+        "fr": "Mettre en pause, reprendre ou arrêter un cycle hOn",
+        "de": "hOn-Programm pausieren, fortsetzen oder stoppen",
+        "es": "Pausar, reanudar o detener un ciclo hOn"
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": true,
+          "label": {
+            "en": "Appliance",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Electrodoméstico"
+          }
+        },
+        {
+          "key": "command",
+          "type": "select",
+          "required": true,
+          "label": {
+            "en": "Command",
+            "fr": "Commande",
+            "de": "Befehl",
+            "es": "Orden"
+          },
+          "options": [
+            {
+              "value": "pause",
+              "label": {
+                "en": "Pause",
+                "fr": "Pause",
+                "de": "Pause",
+                "es": "Pausa"
+              }
+            },
+            {
+              "value": "resume",
+              "label": {
+                "en": "Resume",
+                "fr": "Reprendre",
+                "de": "Fortsetzen",
+                "es": "Reanudar"
+              }
+            },
+            {
+              "value": "stop",
+              "label": {
+                "en": "Stop",
+                "fr": "Arrêter",
+                "de": "Stoppen",
+                "es": "Detener"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "key": "refresh_status",
+      "timeout_seconds": 30,
+      "label": {
+        "en": "Read the state of an hOn appliance",
+        "fr": "Lire l’état d’un appareil hOn",
+        "de": "Zustand eines hOn-Geräts lesen",
+        "es": "Leer el estado de un electrodoméstico hOn"
+      },
+      "description": {
+        "en": "Asks the hOn cloud now, for a condition or a message in the next actions.",
+        "fr": "Interroge le cloud hOn maintenant, pour une condition ou un message dans les actions suivantes.",
+        "de": "Fragt die hOn-Cloud sofort ab, für eine Bedingung oder Nachricht in den folgenden Aktionen.",
+        "es": "Consulta la nube hOn ahora, para una condición o un mensaje en las acciones siguientes."
+      },
+      "fields": [
+        {
+          "key": "device",
+          "type": "select",
+          "source": "devices",
+          "required": true,
+          "label": {
+            "en": "Appliance",
+            "fr": "Appareil",
+            "de": "Gerät",
+            "es": "Electrodoméstico"
+          }
+        }
+      ],
+      "outputs": [
+        {
+          "key": "machine_state",
+          "type": "string",
+          "label": {
+            "en": "Machine state",
+            "fr": "État de la machine",
+            "de": "Gerätezustand",
+            "es": "Estado de la máquina"
+          },
+          "description": {
+            "en": "running, paused, finished, ready, offline…",
+            "fr": "running, paused, finished, ready, offline…",
+            "de": "running, paused, finished, ready, offline…",
+            "es": "running, paused, finished, ready, offline…"
+          }
+        },
+        {
+          "key": "program_phase",
+          "type": "string",
+          "label": {
+            "en": "Phase",
+            "fr": "Phase",
+            "de": "Phase",
+            "es": "Fase"
+          },
+          "description": {
+            "en": "washing, rinse, spin, drying…",
+            "fr": "washing, rinse, spin, drying…",
+            "de": "washing, rinse, spin, drying…",
+            "es": "washing, rinse, spin, drying…"
+          }
+        },
+        {
+          "key": "program",
+          "type": "string",
+          "label": {
+            "en": "Program",
+            "fr": "Programme",
+            "de": "Programm",
+            "es": "Programa"
+          }
+        },
+        {
+          "key": "remaining_minutes",
+          "type": "number",
+          "label": {
+            "en": "Minutes left",
+            "fr": "Minutes restantes",
+            "de": "Verbleibende Minuten",
+            "es": "Minutos restantes"
+          }
+        },
+        {
+          "key": "connected",
+          "type": "boolean",
+          "label": {
+            "en": "Connected",
+            "fr": "Connecté",
+            "de": "Verbunden",
+            "es": "Conectado"
+          }
+        },
+        {
+          "key": "error_code",
+          "type": "string",
+          "label": {
+            "en": "Error code",
+            "fr": "Code d’erreur",
+            "de": "Fehlercode",
+            "es": "Código de error"
+          }
+        }
+      ]
+    }
+  ]
+}

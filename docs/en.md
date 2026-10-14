@@ -1,0 +1,81 @@
+# hOn
+
+## Overview
+
+This integration brings the Haier, Candy and Hoover appliances of your **hOn** app into Gladys: washing machines, washer dryers, tumble dryers, dishwashers, air conditioners, fridges, freezers, wine cellars and ovens. You follow their state, phase and remaining time on the dashboard, you start a program or pause a cycle from Gladys, and your scenes react when a cycle ends, an error appears or the salt runs out.
+
+It talks to the **hOn cloud** with the account of the app, through the same unofficial interface as the app (Haier publishes no API): your appliances and their states go through Haier’s servers, over the Internet. Haier may change this interface without notice.
+
+## Requirements
+
+- Gladys Assistant 5.1.1 or later.
+- An hOn account (e-mail address and password) where your appliances are already added and connected, in the hOn app. Log in to the app once if you have just created the account or changed the password (terms to accept).
+- Accounts with two-step verification by e-mail are not supported.
+
+## Configuration
+
+### Account
+
+Enter the **e-mail address** and the **password** of your hOn account, then save. The password is stored by Gladys and only sent to the hOn cloud; the session (never the password) is kept by the integration so that a restart does not log in again: the hOn cloud blocks accounts that log in too often.
+
+Press **Test the connection**: the message lists your appliances and their state. If hOn refuses the account, the integration waits 15 minutes (then longer) before trying again; fix the e-mail address or the password to try at once.
+
+### Refresh interval and language
+
+- **Refresh interval**: the state of the appliances is read every 30 seconds, 1 minute (default), 2 or 5 minutes.
+- **Language of the device texts**: the feature names and the text states (machine state, phase) are written in this language, because Gladys does not send yours with them.
+
+### Remote control
+
+Like in the hOn app, a washing machine, a dryer or a dishwasher only accepts a start, a pause or a stop when **remote control** is enabled on its panel: load it, close the door, then press its remote control or Wi-Fi button. The **Remote control** feature of the device shows whether it is enabled. Ovens are read only: no remote start from Gladys.
+
+## Usage
+
+### Devices
+
+Open the **Discover** tab of the integration: every appliance of the account is listed, with the features it reports. Add the ones you want.
+
+- Washing machines, washer dryers, dryers, dishwashers: **State** (running, paused, finished, delayed start…), **Phase** (washing, rinse, spin, drying…), **Program** (choose one to start it), **Remaining time**, **Pause**, **Door**, **Remote control**, **Energy consumption** and **Water consumption** (models that report them), **Error**, and for dishwashers **Salt to refill** and **Rinse aid to refill**.
+- Air conditioners: **On/Off**, **Mode**, **Setpoint**, **Fan speed**, **Swing**, indoor and outdoor temperatures.
+- Fridges, freezers, wine cellars: temperature and setpoint of each zone, doors, super cool, super freeze, holiday and auto modes (controllable when the model allows it), room temperature and humidity.
+- Ovens and the other types: state, temperatures, remaining time, error.
+
+Each appliance shows a **cloud** badge, or **unreachable** when it is not connected to the hOn cloud. Program names are the ones of the hOn cloud, in English.
+
+### Widgets
+
+![The “hOn appliances” and “hOn appliance” widgets: state, phase and time left of every appliance, progress of the washing machine with its pause and stop buttons (generated illustration, not a screenshot)](https://raw.githubusercontent.com/William-De71/gladys-hon/main/docs/assets/widgets.en.png)
+
+- **hOn appliances**: every appliance with its state, phase and time left (or its temperatures), and a Refresh button. Setting: all appliances or only those running.
+- **hOn appliance**: one appliance (setting): state, phase, program, remote control, progress of the cycle, time left, temperatures, and the Pause, Resume, Stop (with confirmation) or Turn on / Turn off buttons.
+
+### Scene triggers
+
+- **An hOn cycle starts** and **An hOn cycle is finished** (filters: appliance, type): variables appliance name, type, program, minutes left or duration.
+- **An hOn appliance reports an error**: variable error code.
+- **An hOn appliance needs a refill**: salt, rinse aid, detergent or softener.
+- **An hOn appliance goes offline** / **is back online**.
+- **The hOn account is refused**: Gladys no longer receives the states.
+
+A cycle started or stopped by a scene action does not fire these triggers (no loop).
+
+### Scene actions
+
+- **Start an hOn program**: appliance, program name (from the **List the programs** button of the configuration, e.g. `cottons`), optional delayed start in minutes. Outputs: program, estimated duration.
+- **Pause, resume or stop an hOn cycle**.
+- **Read the state of an hOn appliance**: outputs machine state, phase, program, minutes left, connected, error code, for a condition or a message.
+
+### Scene examples
+
+- When **the washing machine’s cycle is finished** → send “The laundry is ready ({{triggerEvent.data.duration_minutes}} min)” to the family.
+- When **the dishwasher needs a refill** of salt → add “salt” to the shopping list notification.
+- Every weekday at 1 pm, if the electricity is cheap → **Start an hOn program** `eco_40_60` on the washing machine loaded in the morning (remote control enabled).
+
+## Troubleshooting
+
+- **“hOn refused the e-mail address or the password”**: check them in the hOn app. The same message appears when the account logged in too often: wait, the integration retries by itself. Accounts with two-step verification by e-mail cannot log in.
+- **No appliance**: add them in the hOn app first, then press **Test the connection**.
+- **“Remote control is off”**: enable it on the panel of the appliance, it switches off again at the end of the cycle on most models.
+- **A command is accepted but nothing happens**: the appliance applies it within a few seconds; it is read again 5 and 20 seconds later. Check the door and the remote control.
+- **A feature is missing**: features follow what the model reports to the hOn cloud; open an issue with the type and model.
+- Logs: the Logs tab of the integration, with `DEBUG=gladys-integration-sdk` for the details. Issues: https://github.com/William-De71/gladys-hon/issues

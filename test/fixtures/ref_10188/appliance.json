@@ -1,0 +1,15 @@
+{
+  "macAddress": "a4-cf-12-00-00-05",
+  "applianceTypeName": "REF",
+  "applianceTypeId": 14,
+  "applianceModelId": 10188,
+  "brand": "haier",
+  "modelName": "HSW59F18EIPT",
+  "nickName": "Kitchen fridge",
+  "serialNumber": "XX11X1X1111XXX1X1111",
+  "code": "XX11X1X1111",
+  "connectivity": "wifi|ble",
+  "series": "multidoor",
+  "fwVersion": "5.15.0",
+  "eepromId": 41
+}

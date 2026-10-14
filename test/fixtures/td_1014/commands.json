@@ -1,0 +1,1140 @@
+{
+  "settings": {
+    "setConfig": {
+      "description": "The message allows to set platform parameters",
+      "protocolType": "MQTT",
+      "parameters": {
+        "httpEndpoint": { "category": "command", "typology": "fixed", "mandatory": 0 },
+        "mqttEndpoint": { "category": "command", "typology": "fixed", "mandatory": 0 }
+      }
+    }
+  },
+  "stopProgram": {
+    "description": "The message allows to stop the program",
+    "protocolType": "MQTT",
+    "parameters": {
+      "returnStandby": {
+        "category": "command",
+        "typology": "fixed",
+        "mandatory": 1,
+        "fixedValue": "1"
+      }
+    }
+  },
+  "pauseProgram": {
+    "description": "The message allows to pause the program",
+    "protocolType": "MQTT",
+    "parameters": {
+      "pause": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "1" }
+    }
+  },
+  "resumeProgram": {
+    "description": "The message allows to exit from pause mode returning to the cycle previously in execution",
+    "protocolType": "MQTT",
+    "parameters": {
+      "pause": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "0" }
+    }
+  },
+  "startProgram": {
+    "PROGRAMS.TD.HQD_COTTON": {
+      "description": "The command allows to start a program",
+      "protocolType": "MQTT",
+      "parameters": {
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prCode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "62"
+        },
+        "dryTimeMM": { "category": "command", "typology": "fixed", "mandatory": 1 },
+        "dryLevel": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "14",
+          "minimumValue": "12",
+          "maximumValue": "14",
+          "incrementValue": "1"
+        },
+        "tempLevel": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "4",
+          "minimumValue": "2",
+          "maximumValue": "4",
+          "incrementValue": "1"
+        },
+        "antiCreaseTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "360",
+          "incrementValue": "360"
+        },
+        "sterilizationStatus": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1410",
+          "incrementValue": "30"
+        },
+        "pause": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "0" },
+        "lockStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "delicateStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "buzzerDisabled": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "ironRemindStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "mitesRemovalStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "fastDryStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "anionStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "programClass": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "texture": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "13"
+        },
+        "airwashSprayTime": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "cloudProgSrc": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "cloudProgId": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "255"
+        },
+        "dryMode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "airWashMode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "operationName": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "grDryCloudProg"
+        }
+      },
+      "ancillaryParameters": {
+        "prPosition": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "energyLabel": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "2",
+          "minimumValue": "1",
+          "maximumValue": "5",
+          "incrementValue": "1"
+        },
+        "tumblingStatus": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "suggestedLoadD": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": 9,
+          "suggestedValue": 9
+        },
+        "programType": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "D"
+        },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["dashboard", "auto"],
+          "defaultValue": "[dashboard|auto]"
+        },
+        "programCluster": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "traditional"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        }
+      }
+    },
+    "PROGRAMS.TD.HQD_SYNTHETICS": {
+      "description": "The command allows to start a program",
+      "protocolType": "MQTT",
+      "parameters": {
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prCode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "63"
+        },
+        "dryTimeMM": { "category": "command", "typology": "fixed", "mandatory": 1 },
+        "dryLevel": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "13",
+          "minimumValue": "12",
+          "maximumValue": "14",
+          "incrementValue": "1"
+        },
+        "tempLevel": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "4",
+          "minimumValue": "2",
+          "maximumValue": "4",
+          "incrementValue": "1"
+        },
+        "antiCreaseTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "360",
+          "incrementValue": "360"
+        },
+        "sterilizationStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1410",
+          "incrementValue": "30"
+        },
+        "pause": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "0" },
+        "lockStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "delicateStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "buzzerDisabled": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "ironRemindStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "mitesRemovalStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "fastDryStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "anionStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "programClass": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "texture": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "64"
+        },
+        "airwashSprayTime": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "cloudProgSrc": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "cloudProgId": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "255"
+        },
+        "dryMode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "airWashMode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "operationName": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "grDryCloudProg"
+        }
+      },
+      "ancillaryParameters": {
+        "prPosition": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "energyLabel": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "4",
+          "minimumValue": "2",
+          "maximumValue": "5",
+          "incrementValue": "1"
+        },
+        "tumblingStatus": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "suggestedLoadD": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": 4.5,
+          "suggestedValue": 4.5
+        },
+        "programType": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "D"
+        },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["dashboard", "auto"],
+          "defaultValue": "[dashboard|auto]"
+        },
+        "programCluster": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "traditional"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        }
+      }
+    },
+    "PROGRAMS.TD.HQD_MIX": {
+      "description": "The command allows to start a program",
+      "protocolType": "MQTT",
+      "parameters": {
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prCode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "64"
+        },
+        "dryTimeMM": { "category": "command", "typology": "fixed", "mandatory": 1 },
+        "dryLevel": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "14",
+          "minimumValue": "12",
+          "maximumValue": "14",
+          "incrementValue": "1"
+        },
+        "tempLevel": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "4",
+          "minimumValue": "2",
+          "maximumValue": "4",
+          "incrementValue": "1"
+        },
+        "antiCreaseTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "360",
+          "incrementValue": "360"
+        },
+        "sterilizationStatus": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1410",
+          "incrementValue": "30"
+        },
+        "pause": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "0" },
+        "lockStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "delicateStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "buzzerDisabled": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "ironRemindStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "mitesRemovalStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "fastDryStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "anionStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "programClass": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "texture": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "13"
+        },
+        "airwashSprayTime": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "cloudProgSrc": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "cloudProgId": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "255"
+        },
+        "dryMode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "airWashMode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "operationName": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "grDryCloudProg"
+        }
+      },
+      "ancillaryParameters": {
+        "prPosition": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "3"
+        },
+        "energyLabel": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "2",
+          "minimumValue": "1",
+          "maximumValue": "5",
+          "incrementValue": "1"
+        },
+        "tumblingStatus": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "suggestedLoadD": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": 5.4,
+          "suggestedValue": 5.4
+        },
+        "programType": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "D"
+        },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["dashboard", "auto"],
+          "defaultValue": "[dashboard|auto]"
+        },
+        "programCluster": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "traditional"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        }
+      }
+    },
+    "PROGRAMS.TD.HQD_TOWEL": {
+      "description": "The command allows to start a program",
+      "protocolType": "MQTT",
+      "parameters": {
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prCode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "65"
+        },
+        "dryTimeMM": { "category": "command", "typology": "fixed", "mandatory": 1 },
+        "dryLevel": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "14",
+          "minimumValue": "12",
+          "maximumValue": "14",
+          "incrementValue": "1"
+        },
+        "tempLevel": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "4",
+          "minimumValue": "2",
+          "maximumValue": "4",
+          "incrementValue": "1"
+        },
+        "antiCreaseTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "360",
+          "minimumValue": "0",
+          "maximumValue": "360",
+          "incrementValue": "360"
+        },
+        "sterilizationStatus": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1410",
+          "incrementValue": "30"
+        },
+        "pause": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "0" },
+        "lockStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "delicateStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "buzzerDisabled": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "ironRemindStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "mitesRemovalStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "fastDryStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "anionStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "programClass": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "texture": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "36"
+        },
+        "airwashSprayTime": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "cloudProgSrc": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "cloudProgId": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "255"
+        },
+        "dryMode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "airWashMode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "operationName": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "grDryCloudProg"
+        }
+      },
+      "ancillaryParameters": {
+        "prPosition": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "4"
+        },
+        "energyLabel": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "2",
+          "minimumValue": "1",
+          "maximumValue": "5",
+          "incrementValue": "1"
+        },
+        "tumblingStatus": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "1",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "suggestedLoadD": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": 4.5,
+          "suggestedValue": 4.5
+        },
+        "programType": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "D"
+        },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["dashboard", "auto"],
+          "defaultValue": "[dashboard|auto]"
+        },
+        "programCluster": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "home"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        }
+      }
+    },
+    "PROGRAMS.TD.IOT_DRY_COTTON": {
+      "description": "The command allows to start a program",
+      "protocolType": "MQTT",
+      "parameters": {
+        "onOffStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "prCode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "62"
+        },
+        "dryTimeMM": { "category": "command", "typology": "fixed", "mandatory": 1 },
+        "dryLevel": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "14",
+          "minimumValue": "12",
+          "maximumValue": "14",
+          "incrementValue": "1"
+        },
+        "tempLevel": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "4",
+          "minimumValue": "2",
+          "maximumValue": "4",
+          "incrementValue": "1"
+        },
+        "antiCreaseTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "360",
+          "incrementValue": "360"
+        },
+        "sterilizationStatus": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "delayTime": {
+          "category": "command",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1410",
+          "incrementValue": "30"
+        },
+        "pause": { "category": "command", "typology": "fixed", "mandatory": 1, "fixedValue": "0" },
+        "lockStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "delicateStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "buzzerDisabled": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "ironRemindStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "mitesRemovalStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "fastDryStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "anionStatus": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "programClass": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "texture": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "13"
+        },
+        "airwashSprayTime": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "cloudProgSrc": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "2"
+        },
+        "cloudProgId": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "0"
+        },
+        "dryMode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "airWashMode": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "operationName": {
+          "category": "command",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "grDryCloudProg"
+        }
+      },
+      "ancillaryParameters": {
+        "prPosition": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "1"
+        },
+        "energyLabel": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "2",
+          "minimumValue": "1",
+          "maximumValue": "5",
+          "incrementValue": "1"
+        },
+        "tumblingStatus": {
+          "category": "general",
+          "typology": "range",
+          "mandatory": 1,
+          "defaultValue": "0",
+          "minimumValue": "0",
+          "maximumValue": "1",
+          "incrementValue": "1"
+        },
+        "suggestedLoadD": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": 9,
+          "suggestedValue": 9
+        },
+        "programType": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "D"
+        },
+        "programFamily": {
+          "category": "cluster",
+          "typology": "enum",
+          "mandatory": 1,
+          "enumValues": ["wmSync", "guided", "voice", "care", "auto"],
+          "defaultValue": "[wmSync|guided|voice|care|auto]"
+        },
+        "programCluster": {
+          "category": "cluster",
+          "typology": "fixed",
+          "mandatory": 1,
+          "fixedValue": "traditional"
+        },
+        "remoteVisible": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "0"
+        },
+        "remoteActionable": {
+          "category": "general",
+          "typology": "fixed",
+          "mandatory": 0,
+          "fixedValue": "1"
+        }
+      }
+    }
+  },
+  "options": {
+    "opt1": "anticrease",
+    "opt2": "dryingManager",
+    "opt3": "bestIroning",
+    "opt4": "hybrid"
+  },
+  "dictionaryId": 203,
+  "resultCode": "0"
+}

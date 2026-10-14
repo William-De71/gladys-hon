@@ -1,0 +1,15 @@
+{
+  "macAddress": "a4-cf-12-00-00-03",
+  "applianceTypeName": "DW",
+  "applianceTypeId": 9,
+  "applianceModelId": 522,
+  "brand": "hoover",
+  "modelName": "HFB 5B2D3FW",
+  "serialNumber": "1111111111111111",
+  "code": "11111111",
+  "connectivity": "wifi|ble",
+  "series": "h-dish500",
+  "fwVersion": "5.5.0",
+  "eepromId": 214,
+  "nickName": "Dishwasher"
+}

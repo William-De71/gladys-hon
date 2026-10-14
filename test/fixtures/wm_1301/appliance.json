@@ -1,0 +1,15 @@
+{
+  "macAddress": "a4-cf-12-00-00-01",
+  "applianceTypeName": "WM",
+  "applianceTypeId": 1,
+  "applianceModelId": 1301,
+  "brand": "hoover",
+  "modelName": "H7W 412MBCR-80",
+  "nickName": "Washing machine",
+  "serialNumber": "XX1XXXX1111XXXXX1111",
+  "code": "XX1XXXX1111",
+  "connectivity": "wifi|ble",
+  "series": "h-wash700Pro",
+  "fwVersion": "5.15.0",
+  "eepromId": 41
+}

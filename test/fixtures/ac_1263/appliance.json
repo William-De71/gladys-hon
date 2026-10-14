@@ -1,0 +1,15 @@
+{
+  "macAddress": "a4-cf-12-00-00-04",
+  "applianceTypeName": "AC",
+  "applianceTypeId": 11,
+  "applianceModelId": 1263,
+  "brand": "haier",
+  "modelName": "HAS09TAAIN",
+  "nickName": "Living room AC",
+  "serialNumber": "XXXX1XX1111X1XX11111",
+  "code": "XXXX1XX1111",
+  "connectivity": "wifi|ble",
+  "series": "tundra",
+  "fwVersion": "5.15.0",
+  "eepromId": 41
+}

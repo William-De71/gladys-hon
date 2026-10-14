@@ -1,0 +1,15 @@
+{
+  "macAddress": "a4-cf-12-00-00-02",
+  "applianceTypeName": "TD",
+  "applianceTypeId": 8,
+  "applianceModelId": 1014,
+  "brand": "haier",
+  "modelName": "HD90-A3959 DE",
+  "nickName": "Dryer",
+  "serialNumber": "XX0000X0000XXXX00000",
+  "code": "XX0000X0000",
+  "connectivity": "wifi|ble",
+  "series": "959",
+  "fwVersion": "5.12.0",
+  "eepromId": 41
+}

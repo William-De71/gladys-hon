@@ -1,0 +1,564 @@
+{
+  "wm_1301": [
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000001:machine_state",
+      "category": "text",
+      "type": "text",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000001:program_phase",
+      "category": "text",
+      "type": "text",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000001:program",
+      "category": "text",
+      "type": "select",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": false
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000001:remaining_time",
+      "category": "duration",
+      "type": "integer",
+      "unit": "minutes",
+      "min": 0,
+      "max": 1440,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000001:pause",
+      "category": "switch",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": false
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000001:door",
+      "category": "opening-sensor",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000001:remote_control",
+      "category": "unknown",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000001:energy",
+      "category": "energy-sensor",
+      "type": "index",
+      "unit": "kilowatt-hour",
+      "min": 0,
+      "max": 1000000,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000001:water",
+      "category": "volume-sensor",
+      "type": "decimal",
+      "unit": "liter",
+      "min": 0,
+      "max": 1000000,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000001:error",
+      "category": "text",
+      "type": "text",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": true
+    }
+  ],
+  "td_1014": [
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000002:machine_state",
+      "category": "text",
+      "type": "text",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000002:program_phase",
+      "category": "text",
+      "type": "text",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000002:program",
+      "category": "text",
+      "type": "select",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": false
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000002:remaining_time",
+      "category": "duration",
+      "type": "integer",
+      "unit": "minutes",
+      "min": 0,
+      "max": 1440,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000002:pause",
+      "category": "switch",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": false
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000002:door",
+      "category": "opening-sensor",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000002:remote_control",
+      "category": "unknown",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000002:error",
+      "category": "text",
+      "type": "text",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": true
+    }
+  ],
+  "dw_522": [
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000003:machine_state",
+      "category": "text",
+      "type": "text",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000003:program_phase",
+      "category": "text",
+      "type": "text",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000003:program",
+      "category": "text",
+      "type": "select",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": false
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000003:remaining_time",
+      "category": "duration",
+      "type": "integer",
+      "unit": "minutes",
+      "min": 0,
+      "max": 1440,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000003:door",
+      "category": "opening-sensor",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000003:remote_control",
+      "category": "unknown",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000003:salt_refill",
+      "category": "unknown",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000003:rinse_aid_refill",
+      "category": "unknown",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000003:error",
+      "category": "text",
+      "type": "text",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": true
+    }
+  ],
+  "ac_1263": [
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000004:ac_power",
+      "category": "air-conditioning",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": false
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000004:ac_mode",
+      "category": "air-conditioning",
+      "type": "mode",
+      "unit": null,
+      "min": 0,
+      "max": 4,
+      "step": null,
+      "read_only": false
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000004:ac_target_temperature",
+      "category": "air-conditioning",
+      "type": "target-temperature",
+      "unit": "celsius",
+      "min": 16,
+      "max": 30,
+      "step": 1,
+      "read_only": false
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000004:ac_fan_speed",
+      "category": "air-conditioning",
+      "type": "fan-speed",
+      "unit": null,
+      "min": 0,
+      "max": 7,
+      "step": null,
+      "read_only": false
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000004:ac_swing_vertical",
+      "category": "air-conditioning",
+      "type": "swing-vertical",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": false
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000004:indoor_temperature",
+      "category": "temperature-sensor",
+      "type": "decimal",
+      "unit": "celsius",
+      "min": -60,
+      "max": 300,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000004:outdoor_temperature",
+      "category": "temperature-sensor",
+      "type": "decimal",
+      "unit": "celsius",
+      "min": -60,
+      "max": 300,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000004:energy",
+      "category": "energy-sensor",
+      "type": "index",
+      "unit": "kilowatt-hour",
+      "min": 0,
+      "max": 1000000,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000004:error",
+      "category": "text",
+      "type": "text",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": true
+    }
+  ],
+  "ref_10188": [
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:zone1_temperature",
+      "category": "temperature-sensor",
+      "type": "decimal",
+      "unit": "celsius",
+      "min": -60,
+      "max": 300,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:zone2_temperature",
+      "category": "temperature-sensor",
+      "type": "decimal",
+      "unit": "celsius",
+      "min": -60,
+      "max": 300,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:zone1_setpoint",
+      "category": "thermostat",
+      "type": "target-temperature",
+      "unit": "celsius",
+      "min": 1,
+      "max": 9,
+      "step": 1,
+      "read_only": false
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:zone2_setpoint",
+      "category": "thermostat",
+      "type": "target-temperature",
+      "unit": "celsius",
+      "min": -24,
+      "max": -14,
+      "step": 1,
+      "read_only": false
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:super_cool",
+      "category": "switch",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:super_freeze",
+      "category": "switch",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:holiday_mode",
+      "category": "switch",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:auto_set",
+      "category": "switch",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:zone1_door",
+      "category": "opening-sensor",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:zone2_door",
+      "category": "opening-sensor",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:room_temperature",
+      "category": "temperature-sensor",
+      "type": "decimal",
+      "unit": "celsius",
+      "min": -60,
+      "max": 300,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:room_humidity",
+      "category": "humidity-sensor",
+      "type": "decimal",
+      "unit": "percent",
+      "min": 0,
+      "max": 100,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:error",
+      "category": "text",
+      "type": "text",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": true
+    }
+  ],
+  "ov_577": [
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000006:machine_state",
+      "category": "text",
+      "type": "text",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000006:remaining_time",
+      "category": "duration",
+      "type": "integer",
+      "unit": "minutes",
+      "min": 0,
+      "max": 1440,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000006:remote_control",
+      "category": "unknown",
+      "type": "binary",
+      "unit": null,
+      "min": 0,
+      "max": 1,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000006:temperature",
+      "category": "temperature-sensor",
+      "type": "decimal",
+      "unit": "celsius",
+      "min": -60,
+      "max": 300,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000006:selected_temperature",
+      "category": "temperature-sensor",
+      "type": "decimal",
+      "unit": "celsius",
+      "min": -60,
+      "max": 300,
+      "step": null,
+      "read_only": true
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000006:error",
+      "category": "text",
+      "type": "text",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": true
+    }
+  ]
+}

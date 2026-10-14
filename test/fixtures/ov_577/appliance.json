@@ -1,0 +1,15 @@
+{
+  "macAddress": "a4-cf-12-00-00-06",
+  "applianceTypeName": "OV",
+  "applianceTypeId": 4,
+  "applianceModelId": 577,
+  "brand": "haier",
+  "modelName": "HWO60SM2F3XH",
+  "serialNumber": "1111111111111111",
+  "code": "11111111",
+  "connectivity": "wifi|ble",
+  "series": "series2",
+  "fwVersion": "5.1.0",
+  "eepromId": 235,
+  "nickName": "Oven"
+}
