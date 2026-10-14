@@ -37,7 +37,7 @@ Open the **Discover** tab of the integration: every appliance of the account is 
 
 - Washing machines, washer dryers, dryers, dishwashers: **State** (running, paused, finished, delayed start…), **Phase** (washing, rinse, spin, drying…), **Program** (choose one to start it), **Remaining time**, **Pause**, **Door**, **Remote control**, **Energy consumption** and **Water consumption** (models that report them), **Error**, and for dishwashers **Salt to refill** and **Rinse aid to refill**.
 - Air conditioners: **On/Off**, **Mode**, **Setpoint**, **Fan speed**, **Swing**, indoor and outdoor temperatures.
-- Fridges, freezers, wine cellars: temperature and setpoint of each zone, doors, super cool, super freeze, holiday and auto modes (controllable when the model allows it), room temperature and humidity.
+- Fridges, freezers, wine cellars: temperature and setpoint of each zone, doors, super cool, super freeze, holiday and auto modes and a **Mode** list (started like in the hOn app), room temperature and humidity.
 - Ovens and the other types: state, temperatures, remaining time, error.
 
 Each appliance shows a **cloud** badge, or **unreachable** when it is not connected to the hOn cloud. Program names are the ones of the hOn cloud, in English.
@@ -47,7 +47,7 @@ Each appliance shows a **cloud** badge, or **unreachable** when it is not connec
 ![The “hOn appliances” and “hOn appliance” widgets: state, phase and time left of every appliance, progress of the washing machine with its pause and stop buttons (generated illustration, not a screenshot)](https://raw.githubusercontent.com/William-De71/gladys-hon/main/docs/assets/widgets.en.png)
 
 - **hOn appliances**: every appliance with its state, phase and time left (or its temperatures), and a Refresh button. Setting: all appliances or only those running.
-- **hOn appliance**: one appliance (setting): state, phase, program, remote control, progress of the cycle, time left, temperatures, and the Pause, Resume, Stop (with confirmation) or Turn on / Turn off buttons.
+- **hOn appliance**: one appliance (setting): state, phase, program, remote control, progress of the cycle, time left, temperatures (the setpoints of a fridge that reports none), and the Pause, Resume, Stop (with confirmation) or Turn on / Turn off buttons.
 
 ### Scene triggers
 
@@ -78,4 +78,4 @@ A cycle started or stopped by a scene action does not fire these triggers (no lo
 - **“Remote control is off”**: enable it on the panel of the appliance, it switches off again at the end of the cycle on most models.
 - **A command is accepted but nothing happens**: the appliance applies it within a few seconds; it is read again 5 and 20 seconds later. Check the door and the remote control.
 - **A feature is missing**: features follow what the model reports to the hOn cloud; open an issue with the type and model.
-- Logs: the Logs tab of the integration, with `DEBUG=gladys-integration-sdk` for the details. Issues: https://github.com/William-De71/gladys-hon/issues
+- Logs: the Logs tab of the integration. For a report, click **Diagnostic** in the configuration and copy the lines starting with `hOn diagnostic` (e-mail, MAC address, serial number and nickname are left out). Issues: https://github.com/William-De71/gladys-hon/issues

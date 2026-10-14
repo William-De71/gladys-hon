@@ -160,24 +160,80 @@ const temperatureSensor = (key, source, present = (entry) => has(entry, source))
   value: (entry) => num(param(entry, source)),
 });
 
+// --- Fridge modes ------------------------------------------------------------------
+//
+// Fridges and freezers switch their modes with programs of `startProgram`
+// (PROGRAMS.REF.AUTO_SET sets intelligenceMode to 1…), not with `settings`:
+// the hOn app does the same (command histories of hon-test-data).
+// `stopProgram` sets every mode flag back to 0.
+
+// Mode flags, in the order pyhOn picks the current mode (appliances/ref.py).
+const MODE_FLAGS = ['holidayMode', 'intelligenceMode', 'quickModeZ1', 'quickModeZ2'];
+const MODE_LABELS = {
+  holidayMode: 'holiday_mode',
+  intelligenceMode: 'auto_set',
+  quickModeZ1: 'super_cool',
+  quickModeZ2: 'super_freeze',
+};
+
+/** The flag a program sets on, when it only does that (rule values left out). */
+const modeFlag = (program) => {
+  const entries = Object.entries(program.command?.parameters ?? {});
+  if (entries.length !== 1) {
+    return null;
+  }
+  const [[name, parameter]] = entries;
+  return MODE_FLAGS.includes(name) &&
+    parameter.typology === 'fixed' &&
+    String(parameter.fixed) === '1'
+    ? name
+    : null;
+};
+
+const modePrograms = (entry) =>
+  isType('REF', 'FRE')(entry)
+    ? (entry.commands?.programs ?? [])
+        .filter(modeFlag)
+        .sort((a, b) => MODE_FLAGS.indexOf(modeFlag(a)) - MODE_FLAGS.indexOf(modeFlag(b)))
+    : [];
+
+const modeProgram = (entry, flag) =>
+  modePrograms(entry).find((program) => modeFlag(program) === flag) ?? null;
+
+/** `stopProgram` limited to one flag: its parameters are optional (mandatory 0). */
+const stopOne = (entry, flag) => {
+  const stop = entry.commands?.stop;
+  const parameter = stop?.parameters?.[flag];
+  const others = Object.entries(stop?.parameters ?? {}).filter(([name]) => name !== flag);
+  if (!parameter || others.some(([, other]) => other.mandatory)) {
+    throw new CommandError('errorReadOnly');
+  }
+  return { ...stop, parameters: { [flag]: parameter } };
+};
+
 const onOffSwitch = (key, source, types) => ({
   key,
   category: CATEGORIES.SWITCH,
   type: TYPES.SWITCH.BINARY,
   min: 0,
   max: 1,
+  ...writable,
   present: (entry) => types.includes(entry.type) && (has(entry, source) || canSet(entry, source)),
-  writableWhen: (entry) => canSet(entry, source),
+  writableWhen: (entry) => canSet(entry, source) || Boolean(modeProgram(entry, source)),
   value: (entry) => (has(entry, source) ? (param(entry, source) === '1' ? 1 : 0) : null),
   write: (entry, value) => {
+    const on = Number(value) === 1;
     const definition = setting(entry, source);
-    if (!definition || definition.typology === 'fixed') {
+    if (definition && definition.typology !== 'fixed') {
+      const target =
+        definition.typology === 'range' ? (on ? definition.max : definition.min) : on ? '1' : '0';
+      return settings(entry, { [source]: target });
+    }
+    const program = modeProgram(entry, source);
+    if (!program) {
       throw new CommandError('errorReadOnly');
     }
-    const on = Number(value) === 1;
-    const target =
-      definition.typology === 'range' ? (on ? definition.max : definition.min) : on ? '1' : '0';
-    return settings(entry, { [source]: target });
+    return { command: on ? program.command : stopOne(entry, source), values: {}, sync: false };
   },
 });
 
@@ -480,6 +536,45 @@ export const FEATURES = [
   onOffSwitch('super_freeze', 'quickModeZ2', ['REF', 'FRE']),
   onOffSwitch('holiday_mode', 'holidayMode', ['REF', 'FRE']),
   onOffSwitch('auto_set', 'intelligenceMode', ['REF', 'FRE']),
+  {
+    key: 'fridge_mode',
+    category: CATEGORIES.TEXT,
+    type: TYPES.TEXT.SELECT,
+    min: 0,
+    max: 0,
+    ...writable,
+    present: (entry) => modePrograms(entry).length > 0,
+    options: (entry, language) => [
+      { value: 'none', label: text('modeNone', language), sort_order: 0 },
+      ...modePrograms(entry).map((program, index) => ({
+        value: program.key,
+        label: text(MODE_LABELS[modeFlag(program)], language),
+        sort_order: index + 1,
+      })),
+    ],
+    value: (entry) => {
+      if (!MODE_FLAGS.some((flag) => has(entry, flag))) {
+        return null;
+      }
+      const flag = MODE_FLAGS.find(
+        (name) => param(entry, name) === '1' && modeProgram(entry, name),
+      );
+      return { text: flag ? modeProgram(entry, flag).key : 'none' };
+    },
+    write: (entry, value) => {
+      if (String(value) === 'none') {
+        if (!entry.commands?.stop) {
+          throw new CommandError('errorReadOnly');
+        }
+        return { command: entry.commands.stop, values: {}, sync: false };
+      }
+      const program = modePrograms(entry).find((candidate) => candidate.key === String(value));
+      if (!program) {
+        throw new CommandError('errorUnknownProgram', { program: value });
+      }
+      return { command: program.command, values: {}, sync: false };
+    },
+  },
   ...[
     ['zone1_door', 'doorStatusZ1'],
     ['zone2_door', 'doorStatusZ2'],

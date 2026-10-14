@@ -148,6 +148,8 @@ const MESSAGES = {
     es: 'Modo vacaciones',
   },
   auto_set: { en: 'Auto mode', fr: 'Mode auto', de: 'Automatikmodus', es: 'Modo automático' },
+  fridge_mode: { en: 'Mode', fr: 'Mode', de: 'Modus', es: 'Modo' },
+  modeNone: { en: 'No mode', fr: 'Aucun mode', de: 'Kein Modus', es: 'Sin modo' },
   zone1_door: { en: 'Zone 1 door', fr: 'Porte zone 1', de: 'Tür Zone 1', es: 'Puerta zona 1' },
   zone1_door_REF: {
     en: 'Fridge door',
@@ -391,6 +393,12 @@ const MESSAGES = {
     fr: 'Noms de programmes pour l’action de scène « Lancer un programme » : {list}',
     de: 'Programmnamen für die Szenenaktion „Programm starten“: {list}',
     es: 'Nombres de programa para la acción de escena «Iniciar un programa»: {list}',
+  },
+  diagnosticDone: {
+    en: 'Diagnostic of {count} appliance(s) written to the Logs tab of the integration ({list}). Copy the lines starting with “hOn diagnostic” into your report: e-mail, MAC address, serial number and nickname are left out.',
+    fr: 'Diagnostic de {count} appareil(s) écrit dans l’onglet Journaux de l’intégration ({list}). Copiez les lignes commençant par « hOn diagnostic » dans votre retour : e-mail, adresse MAC, numéro de série et surnom en sont retirés.',
+    de: 'Diagnose von {count} Gerät(en) in den Tab Protokolle der Integration geschrieben ({list}). Kopieren Sie die Zeilen, die mit „hOn diagnostic“ beginnen, in Ihre Meldung: E-Mail, MAC-Adresse, Seriennummer und Spitzname sind entfernt.',
+    es: 'Diagnóstico de {count} electrodoméstico(s) escrito en la pestaña Registros de la integración ({list}). Copie las líneas que empiezan por «hOn diagnostic» en su informe: el correo, la dirección MAC, el número de serie y el apodo se omiten.',
   },
 
   // --- Command errors ------------------------------------------------------------------------

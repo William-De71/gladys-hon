@@ -37,7 +37,7 @@ Abra la pestaña **Descubrir** de la integración: cada electrodoméstico de la 
 
 - Lavadoras, lavadoras secadoras, secadoras, lavavajillas: **Estado** (en marcha, en pausa, terminado, inicio diferido…), **Fase** (lavado, aclarado, centrifugado, secado…), **Programa** (elija uno para iniciarlo), **Tiempo restante**, **Pausa**, **Puerta**, **Control remoto**, **Consumo de energía** y **Consumo de agua** (modelos que los comunican), **Error**, y en los lavavajillas **Reponer sal** y **Reponer abrillantador**.
 - Aires acondicionados: **Encendido/apagado**, **Modo**, **Consigna**, **Velocidad del ventilador**, **Oscilación**, temperaturas interior y exterior.
-- Frigoríficos, congeladores, vinotecas: temperatura y consigna de cada zona, puertas, superfrío, supercongelación, modos vacaciones y automático (controlables si el modelo lo permite), temperatura y humedad ambiente.
+- Frigoríficos, congeladores, vinotecas: temperatura y consigna de cada zona, puertas, superfrío, supercongelación, modos vacaciones y automático y una lista **Modo** (iniciados como en la app hOn), temperatura y humedad ambiente.
 - Hornos y demás tipos: estado, temperaturas, tiempo restante, error.
 
 Cada electrodoméstico lleva una insignia **nube**, o **inaccesible** cuando no está conectado a la nube hOn. Los nombres de programa son los de la nube hOn, en inglés.
@@ -47,7 +47,7 @@ Cada electrodoméstico lleva una insignia **nube**, o **inaccesible** cuando no 
 ![Los widgets «Electrodomésticos hOn» y «Electrodoméstico hOn»: estado, fase y tiempo restante de cada electrodoméstico, progreso de la lavadora con sus botones de pausa y parada (ilustración generada, no es una captura de pantalla)](https://raw.githubusercontent.com/William-De71/gladys-hon/main/docs/assets/widgets.es.png)
 
 - **Electrodomésticos hOn**: cada electrodoméstico con su estado, su fase y su tiempo restante (o sus temperaturas), y un botón Actualizar. Ajuste: todos o solo los que están en marcha.
-- **Electrodoméstico hOn**: un electrodoméstico (ajuste): estado, fase, programa, control remoto, progreso del ciclo, tiempo restante, temperaturas y los botones Pausa, Reanudar, Detener (con confirmación) o Encender / Apagar.
+- **Electrodoméstico hOn**: un electrodoméstico (ajuste): estado, fase, programa, control remoto, progreso del ciclo, tiempo restante, temperaturas (las consignas de un frigorífico que no las informa) y los botones Pausa, Reanudar, Detener (con confirmación) o Encender / Apagar.
 
 ### Disparadores de escena
 
@@ -78,4 +78,4 @@ Un ciclo iniciado o detenido por una acción de escena no activa estos disparado
 - **«El control remoto está desactivado»**: actívelo en el panel del electrodoméstico; en la mayoría de los modelos se desactiva al final del ciclo.
 - **Una orden se acepta pero no pasa nada**: el electrodoméstico la aplica en unos segundos; se vuelve a leer 5 y 20 segundos después. Compruebe la puerta y el control remoto.
 - **Falta una función**: las funciones siguen lo que el modelo comunica a la nube hOn; abra una issue con el tipo y el modelo.
-- Registros: la pestaña Registros de la integración, con `DEBUG=gladys-integration-sdk` para el detalle. Issues: https://github.com/William-De71/gladys-hon/issues
+- Registros: la pestaña Registros de la integración. Para un informe, pulse **Diagnóstico** en la configuración y copie las líneas que empiezan por `hOn diagnostic` (el correo, la dirección MAC, el número de serie y el apodo se omiten). Issues: https://github.com/William-De71/gladys-hon/issues

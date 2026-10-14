@@ -80,7 +80,7 @@ sequenceDiagram
 | ------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Waschmaschine, Waschtrockner, Trockner, Geschirrspüler | Zustand, Phase (`text`), Programm (`text` / `select`, startet es), Restzeit (`duration`, min), Pause (`switch`), Tür (`opening-sensor`), Fernsteuerung, Salz und Klarspüler nachfüllen (`unknown` / `binary`), Energie (`energy-sensor` / `index`, kWh), Wasser (`volume-sensor`, L), Fehler (`text`) |
 | Klimaanlage                                            | Ein/Aus, Modus, Sollwert, Lüfterstufe, vertikale und horizontale Schwenkung (`air-conditioning`), Innen- und Außentemperatur (`temperature-sensor`), Energie, Fehler                                                                                                                                  |
-| Kühlschrank, Gefrierschrank, Weinkühlschrank           | Zonentemperaturen (`temperature-sensor`), Zonensollwerte (`thermostat` / `target-temperature`), Türen (`opening-sensor`), Superkühlen, Supergefrieren, Urlaubs- und Automatikmodus (`switch`), Raumtemperatur und -luftfeuchte, Fehler                                                                |
+| Kühlschrank, Gefrierschrank, Weinkühlschrank           | Zonentemperaturen (`temperature-sensor`), Zonensollwerte (`thermostat` / `target-temperature`), Türen (`opening-sensor`), Superkühlen, Supergefrieren, Urlaubs- und Automatikmodus (`switch`), Liste Modus (`text` / `select`), Raumtemperatur und -luftfeuchte, Fehler                               |
 | Backofen                                               | Zustand, Restzeit, Fernsteuerung, Temperatur und gewählte Temperatur, Fehler (nur lesbar)                                                                                                                                                                                                             |
 | Andere Typen (Haube, Kochfeld, Boiler, Luftreiniger…)  | Zustand, Temperatur, Restzeit, Fehler, sofern gemeldet                                                                                                                                                                                                                                                |
 
@@ -95,7 +95,7 @@ Externe ID eines Geräts: `ext:<selector>:appliance:<MAC-Adresse ohne Bindestric
 ![Die Widgets „hOn-Geräte“ und „hOn-Gerät“ auf Deutsch: Zustand, Phase und Restzeit jedes Geräts, Fortschritt der Waschmaschine mit ihren Tasten Pause und Stopp (generierte Illustration, kein Screenshot)](docs/assets/widgets.de.png)
 
 - **hOn-Geräte**: Anzahl aktiver und aller Geräte, jedes Gerät mit Zustandsabzeichen, Phase und Restzeit (oder Temperaturen), Status des hOn-Kontos, eine Taste Aktualisieren. Einstellung: alle Geräte oder nur die laufenden.
-- **hOn-Gerät**: ein in den Einstellungen gewähltes Gerät: Zustand, Phase, Programm, Fernsteuerung, Fehler, eine Fortschrittsanzeige und die Restzeit während eines Programms, Temperaturen und die Tasten Pause, Fortsetzen, Stoppen (mit Bestätigung) oder Einschalten / Ausschalten.
+- **hOn-Gerät**: ein in den Einstellungen gewähltes Gerät: Zustand, Phase, Programm, Fernsteuerung, Fehler, eine Fortschrittsanzeige und die Restzeit während eines Programms, Temperaturen (die Sollwerte eines Kühlschranks, der keine meldet) und die Tasten Pause, Fortsetzen, Stoppen (mit Bestätigung) oder Einschalten / Ausschalten.
 
 Die Bilder werden von `docs/illustrations/render.sh` aus dem echten Widget-Code erzeugt: Es sind Illustrationen, keine Screenshots.
 
@@ -144,7 +144,7 @@ Ein von einer Szenenaktion gesendeter Befehl löst nie einen Auslöser aus (der 
 | `poll_interval` | select | `60`     | Aktualisierungsintervall in Sekunden: `30`, `60`, `120`, `300` |
 | `language`      | select | `en`     | Sprache der Funktionsnamen und der Textzustände                |
 
-Schaltflächen der Konfigurationsseite: **Verbindung testen** (meldet sich an und listet die Geräte mit ihrem Zustand), **Programme auflisten** (die Programmnamen der Szenenaktion `start_program`).
+Schaltflächen der Konfigurationsseite: **Verbindung testen** (meldet sich an und listet die Geräte mit ihrem Zustand), **Programme auflisten** (die Programmnamen der Szenenaktion `start_program`), **Diagnose** (schreibt in den Tab Protokolle, was jedes Gerät meldet, für eine Meldung).
 
 ## Verwendung
 
@@ -161,7 +161,7 @@ Die Benutzerdokumentation liegt in [docs/de.md](docs/de.md) ([en](docs/en.md), [
 - Zustände werden abgefragt (mindestens alle 30 s); der Push-Kanal der App (MQTT) wird noch nicht genutzt.
 - Programmnamen sind die der hOn-Cloud, auf Englisch. Geführte Rezepte und Backofenprogramme lassen sich nicht starten.
 - Ein Gladys-Gerät pro hOn-Gerät: Mehrzonengeräte, die hOn pro Zone listet, zeigen nur die erste.
-- Superkühlen, Supergefrieren, Urlaubs- und Automatikmodus sind bei Kühlschränken, deren Einstellungen sie nicht enthalten, nur lesbar.
+- Die Modi des Kühlschranks werden wie in der hOn-App über die Programme des Geräts gestartet; ein Gefrierschrank, dessen Modi von seinem Sollwert abhängen, behält sie nur lesbar. Ein mit einer früheren Version hinzugefügter Kühlschrank erhält die Liste **Modus** und seine steuerbaren Modi über die Schaltfläche **Aktualisieren** im Tab Entdecken.
 - Getestet mit den anonymisierten Gerätedaten von [hon-test-data](https://github.com/Andre0512/hon-test-data), noch nicht mit einem echten Konto: Rückmeldungen willkommen.
 
 ## Lokale Entwicklung
@@ -222,7 +222,7 @@ flowchart LR
 - **„Die Fernsteuerung ist deaktiviert“**: Am Bedienfeld des Geräts aktivieren; die meisten Modelle schalten sie am Programmende ab.
 - **Kein Gerät**: In der hOn-App hinzufügen, dann **Verbindung testen**.
 - **Eine Funktion fehlt**: Die Funktionen folgen dem, was das Modell meldet; ein Issue mit Typ und Modell eröffnen (Geräteparameter `HON_TYPE` und `HON_MODEL`).
-- Protokolle: der Tab Protokolle der Integration; `DEBUG=gladys-integration-sdk` für SDK-Details.
+- Protokolle: der Tab Protokolle der Integration. Für eine Meldung klicken Sie in der Konfiguration auf **Diagnose** und kopieren die Zeilen, die mit `hOn diagnostic` beginnen (Gladys kann `DEBUG` nicht am Container setzen: diese Variable dient nur einem lokalen Start).
 
 ## Mitwirken
 

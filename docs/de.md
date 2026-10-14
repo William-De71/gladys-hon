@@ -37,7 +37,7 @@ Wie in der hOn-App nimmt eine Waschmaschine, ein Trockner oder ein Geschirrspül
 
 - Waschmaschinen, Waschtrockner, Trockner, Geschirrspüler: **Zustand** (läuft, pausiert, beendet, Startzeitvorwahl…), **Phase** (Waschen, Spülen, Schleudern, Trocknen…), **Programm** (eines wählen, um es zu starten), **Restzeit**, **Pause**, **Tür**, **Fernsteuerung**, **Energieverbrauch** und **Wasserverbrauch** (Modelle, die sie melden), **Fehler**, bei Geschirrspülern zudem **Salz nachfüllen** und **Klarspüler nachfüllen**.
 - Klimaanlagen: **Ein/Aus**, **Modus**, **Sollwert**, **Lüfterstufe**, **Schwenkung**, Innen- und Außentemperatur.
-- Kühlschränke, Gefrierschränke, Weinkühlschränke: Temperatur und Sollwert jeder Zone, Türen, Superkühlen, Supergefrieren, Urlaubs- und Automatikmodus (steuerbar, wenn das Modell es erlaubt), Raumtemperatur und -luftfeuchte.
+- Kühlschränke, Gefrierschränke, Weinkühlschränke: Temperatur und Sollwert jeder Zone, Türen, Superkühlen, Supergefrieren, Urlaubs- und Automatikmodus und eine Liste **Modus** (gestartet wie in der hOn-App), Raumtemperatur und -luftfeuchte.
 - Backöfen und andere Typen: Zustand, Temperaturen, Restzeit, Fehler.
 
 Jedes Gerät trägt ein Abzeichen **Cloud**, oder **nicht erreichbar**, wenn es nicht mit der hOn-Cloud verbunden ist. Die Programmnamen sind die der hOn-Cloud, auf Englisch.
@@ -47,7 +47,7 @@ Jedes Gerät trägt ein Abzeichen **Cloud**, oder **nicht erreichbar**, wenn es 
 ![Die Widgets „hOn-Geräte“ und „hOn-Gerät“: Zustand, Phase und Restzeit jedes Geräts, Fortschritt der Waschmaschine mit ihren Tasten Pause und Stopp (generierte Illustration, kein Screenshot)](https://raw.githubusercontent.com/William-De71/gladys-hon/main/docs/assets/widgets.de.png)
 
 - **hOn-Geräte**: jedes Gerät mit Zustand, Phase und Restzeit (oder Temperaturen) und eine Taste Aktualisieren. Einstellung: alle Geräte oder nur die laufenden.
-- **hOn-Gerät**: ein Gerät (Einstellung): Zustand, Phase, Programm, Fernsteuerung, Fortschritt, Restzeit, Temperaturen und die Tasten Pause, Fortsetzen, Stoppen (mit Bestätigung) oder Einschalten / Ausschalten.
+- **hOn-Gerät**: ein Gerät (Einstellung): Zustand, Phase, Programm, Fernsteuerung, Fortschritt, Restzeit, Temperaturen (die Sollwerte eines Kühlschranks, der keine meldet) und die Tasten Pause, Fortsetzen, Stoppen (mit Bestätigung) oder Einschalten / Ausschalten.
 
 ### Szenenauslöser
 
@@ -78,4 +78,4 @@ Ein von einer Szenenaktion gestartetes oder gestopptes Programm löst diese Ausl
 - **„Die Fernsteuerung ist deaktiviert“**: Aktivieren Sie sie am Bedienfeld; bei den meisten Modellen schaltet sie sich am Programmende wieder ab.
 - **Ein Befehl wird angenommen, aber nichts passiert**: Das Gerät führt ihn in wenigen Sekunden aus; es wird 5 und 20 Sekunden später erneut gelesen. Prüfen Sie Tür und Fernsteuerung.
 - **Eine Funktion fehlt**: Die Funktionen folgen dem, was das Modell an die hOn-Cloud meldet; eröffnen Sie ein Issue mit Typ und Modell.
-- Protokolle: der Tab Protokolle der Integration, mit `DEBUG=gladys-integration-sdk` für Details. Issues: https://github.com/William-De71/gladys-hon/issues
+- Protokolle: der Tab Protokolle der Integration. Für eine Meldung klicken Sie in der Konfiguration auf **Diagnose** und kopieren die Zeilen, die mit `hOn diagnostic` beginnen (E-Mail, MAC-Adresse, Seriennummer und Spitzname sind entfernt). Issues: https://github.com/William-De71/gladys-hon/issues

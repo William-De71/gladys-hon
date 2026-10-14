@@ -80,7 +80,7 @@ sequenceDiagram
 | ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Lavadora, lavadora secadora, secadora, lavavajillas    | Estado, Fase (`text`), Programa (`text` / `select`, lo inicia), Tiempo restante (`duration`, min), Pausa (`switch`), Puerta (`opening-sensor`), Control remoto, Reponer sal y abrillantador (`unknown` / `binary`), Energía (`energy-sensor` / `index`, kWh), Agua (`volume-sensor`, L), Error (`text`) |
 | Aire acondicionado                                     | Encendido/apagado, Modo, Consigna, Velocidad del ventilador, Oscilación vertical y horizontal (`air-conditioning`), temperaturas interior y exterior (`temperature-sensor`), Energía, Error                                                                                                             |
-| Frigorífico, congelador, vinoteca                      | Temperaturas de zona (`temperature-sensor`), consignas de zona (`thermostat` / `target-temperature`), puertas (`opening-sensor`), superfrío, supercongelación, modos vacaciones y automático (`switch`), temperatura y humedad ambiente, Error                                                          |
+| Frigorífico, congelador, vinoteca                      | Temperaturas de zona (`temperature-sensor`), consignas de zona (`thermostat` / `target-temperature`), puertas (`opening-sensor`), superfrío, supercongelación, modos vacaciones y automático (`switch`), lista Modo (`text` / `select`), temperatura y humedad ambiente, Error                          |
 | Horno                                                  | Estado, Tiempo restante, Control remoto, temperatura y temperatura elegida, Error (solo lectura)                                                                                                                                                                                                        |
 | Otros tipos (campana, placa, calentador, purificador…) | Estado, temperatura, tiempo restante, Error, si se comunican                                                                                                                                                                                                                                            |
 
@@ -95,7 +95,7 @@ Identificador externo de un dispositivo: `ext:<selector>:appliance:<dirección M
 ![Los widgets «Electrodomésticos hOn» y «Electrodoméstico hOn» en español: estado, fase y tiempo restante de cada electrodoméstico, progreso de la lavadora con sus botones de pausa y parada (ilustración generada, no es una captura de pantalla)](docs/assets/widgets.es.png)
 
 - **Electrodomésticos hOn**: número en curso, número de electrodomésticos, cada uno con su insignia de estado, su fase y su tiempo restante (o sus temperaturas), el estado de la cuenta hOn, un botón Actualizar. Ajuste: todos o solo los que están en marcha.
-- **Electrodoméstico hOn**: uno elegido en los ajustes: estado, fase, programa, control remoto, error, un indicador de progreso y el tiempo restante durante un ciclo, temperaturas y los botones Pausa, Reanudar, Detener (con confirmación) o Encender / Apagar.
+- **Electrodoméstico hOn**: uno elegido en los ajustes: estado, fase, programa, control remoto, error, un indicador de progreso y el tiempo restante durante un ciclo, temperaturas (las consignas de un frigorífico que no las informa) y los botones Pausa, Reanudar, Detener (con confirmación) o Encender / Apagar.
 
 Las imágenes las genera `docs/illustrations/render.sh` a partir del código real de los widgets: son ilustraciones, no capturas de pantalla.
 
@@ -144,7 +144,7 @@ Una orden enviada por una acción de escena nunca activa un disparador (la trans
 | `poll_interval` | select | `60`        | intervalo de actualización en segundos: `30`, `60`, `120`, `300` |
 | `language`      | select | `en`        | idioma de los nombres de las funciones y de los estados de texto |
 
-Botones de la página de configuración: **Probar la conexión** (inicia sesión y lista los electrodomésticos con su estado), **Listar los programas** (los nombres de programa de la acción de escena `start_program`).
+Botones de la página de configuración: **Probar la conexión** (inicia sesión y lista los electrodomésticos con su estado), **Listar los programas** (los nombres de programa de la acción de escena `start_program`), **Diagnóstico** (escribe en la pestaña Registros lo que informa cada electrodoméstico, para un informe).
 
 ## Uso
 
@@ -161,7 +161,7 @@ La documentación de usuario está en [docs/es.md](docs/es.md) ([en](docs/en.md)
 - Los estados se consultan (30 s como mínimo); el canal push de la app (MQTT) aún no se usa.
 - Los nombres de programa son los de la nube hOn, en inglés. Las recetas guiadas y los programas de horno no se pueden iniciar.
 - Un dispositivo de Gladys por electrodoméstico hOn: los electrodomésticos multizona que hOn lista por zona muestran solo la primera.
-- Superfrío, supercongelación y los modos vacaciones y automático son de solo lectura en los frigoríficos cuyos ajustes no los incluyen.
+- Los modos del frigorífico se inician con los programas del electrodoméstico, como hace la app hOn; un congelador cuyos modos dependen de su consigna los mantiene de solo lectura. Un frigorífico añadido con una versión anterior obtiene la lista **Modo** y sus modos controlables con el botón **Actualizar** de la pestaña Descubrir.
 - Probada con los datos anonimizados de electrodomésticos de [hon-test-data](https://github.com/Andre0512/hon-test-data), aún no con una cuenta real: sus comentarios son bienvenidos.
 
 ## Desarrollo local
@@ -222,7 +222,7 @@ flowchart LR
 - **«El control remoto está desactivado»**: actívelo en el panel del electrodoméstico; la mayoría de los modelos lo desactivan al final del ciclo.
 - **Ningún electrodoméstico**: añádalos en la app hOn y luego **Probar la conexión**.
 - **Falta una función**: las funciones siguen lo que comunica el modelo; abra una issue con el tipo y el modelo (parámetros `HON_TYPE` y `HON_MODEL` del dispositivo).
-- Registros: la pestaña Registros de la integración; `DEBUG=gladys-integration-sdk` para el detalle del SDK.
+- Registros: la pestaña Registros de la integración. Para un informe, pulse **Diagnóstico** en la configuración y copie las líneas que empiezan por `hOn diagnostic` (Gladys no permite pasar `DEBUG` al contenedor: esa variable solo sirve para una ejecución local).
 
 ## Contribuir
 

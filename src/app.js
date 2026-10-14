@@ -61,6 +61,7 @@ import { buildApplianceWidget, buildOverviewWidget, WIDGET_ACTIONS, WIDGETS } fr
 export const ACTIONS = {
   TEST: 'test_connection',
   PROGRAMS: 'list_programs',
+  DIAGNOSTIC: 'diagnostic',
 };
 
 const MINUTE = 60 * 1000;
@@ -72,6 +73,71 @@ const MUTE_MS = 10 * MINUTE;
 const MANUAL_REFRESH_SPACING_MS = 20 * 1000;
 const WIDGET_REFRESH_SPACING_MS = 11 * 1000;
 const MAX_MESSAGE = 1800;
+const DIAGNOSTIC_CHUNK = 3000;
+
+// What a diagnostic keeps of an appliance of the list: the model, never what
+// identifies the user or the unit (MAC address, serial number, nickname).
+const DIAGNOSTIC_FIELDS = [
+  'applianceTypeName',
+  'applianceTypeId',
+  'applianceModelId',
+  'brand',
+  'modelName',
+  'series',
+  'fwVersion',
+  'connectivity',
+  'eepromId',
+];
+const PRIVATE_PARAM = /mac|serial|ssid|token|password|^ip/i;
+
+/** A parameter definition in a few characters: "=1", "1..9/1", "[0|1]". */
+const compactParameter = (parameter) => {
+  if (parameter.typology === 'fixed') {
+    const value = parameter.fixed;
+    return `=${value && typeof value === 'object' ? JSON.stringify(value) : value}`;
+  }
+  if (parameter.typology === 'range') {
+    return `${parameter.min}..${parameter.max}/${parameter.step}`;
+  }
+  return `[${parameter.values.join('|')}]`;
+};
+
+const compactCommand = (command) => ({
+  name: command.category || command.name,
+  parameters: Object.fromEntries(
+    Object.entries(command.parameters).map(([key, value]) => [key, compactParameter(value)]),
+  ),
+  ancillary: Object.fromEntries(
+    Object.entries(command.ancillary).map(([key, value]) => [key, compactParameter(value)]),
+  ),
+});
+
+/**
+ * @description What a report needs to map a model: its status parameters and
+ * its command definitions, split in parts small enough for a log line.
+ * @param {object} entry - Appliance entry.
+ * @returns {object} `{ appliance, status, commands, programs }`.
+ */
+export function diagnosticOf(entry) {
+  const appliance = Object.fromEntries(
+    DIAGNOSTIC_FIELDS.filter((field) => entry.appliance?.[field] !== undefined).map((field) => [
+      field,
+      entry.appliance[field],
+    ]),
+  );
+  const params = Object.fromEntries(
+    Object.entries(entry.status?.params ?? {}).filter(([name]) => !PRIVATE_PARAM.test(name)),
+  );
+  const commands = Object.entries(entry.commands?.commands ?? {})
+    .filter(([name]) => name !== 'startProgram')
+    .map(([, command]) => compactCommand(command));
+  return {
+    appliance,
+    status: { connected: entry.status?.connected ?? null, params },
+    commands,
+    programs: (entry.commands?.programs ?? []).map((program) => compactCommand(program.command)),
+  };
+}
 
 /**
  * @description Wire the integration.
@@ -618,15 +684,18 @@ export function createApp(
       language,
     )})`;
 
+  const accountMessage = () =>
+    account.refused
+      ? t('statusRefused', { retry: '…' })
+      : t('statusCloudError', { error: account.error || '…' });
+
   gladys.onAction(ACTIONS.TEST, async () => {
     if (!config.configured) {
       return t('statusNotConfigured');
     }
     await poll({ forceList: true });
     if (!account.connected) {
-      return account.refused
-        ? t('statusRefused', { retry: '…' })
-        : t('statusCloudError', { error: account.error || '…' });
+      return accountMessage();
     }
     if (entries.size === 0) {
       return t('testNoAppliance');
@@ -660,6 +729,41 @@ export function createApp(
       return t('programsNone');
     }
     return truncateAll(t('programsList', { list: lines.join(' — ') }), MAX_MESSAGE);
+  });
+
+  // Gladys gives no way to set DEBUG or LOG_LEVEL on the container: the
+  // diagnostic goes to the Logs tab at the info level, on demand.
+  gladys.onAction(ACTIONS.DIAGNOSTIC, async () => {
+    if (!config.configured) {
+      return t('statusNotConfigured');
+    }
+    await poll({ forceList: entries.size === 0 });
+    if (!account.connected) {
+      return accountMessage();
+    }
+    if (entries.size === 0) {
+      return t('testNoAppliance');
+    }
+    const list = [...entries.values()];
+    list.forEach((entry, index) => {
+      const label = ['hOn diagnostic', `${index + 1}/${list.length}`, entry.type]
+        .concat(entry.appliance.modelName ? [entry.appliance.modelName] : [])
+        .join(' ');
+      for (const [part, value] of Object.entries(diagnosticOf(entry))) {
+        const json = JSON.stringify(value);
+        const count = Math.max(1, Math.ceil(json.length / DIAGNOSTIC_CHUNK));
+        for (let chunk = 0; chunk < count; chunk += 1) {
+          const suffix = count > 1 ? ` (${chunk + 1}/${count})` : '';
+          logger.info(
+            `${label} ${part}${suffix}: ${json.slice(chunk * DIAGNOSTIC_CHUNK, (chunk + 1) * DIAGNOSTIC_CHUNK)}`,
+          );
+        }
+      }
+    });
+    const models = list
+      .map((entry) => [entry.type, entry.appliance.modelName].filter(Boolean).join(' '))
+      .join(', ');
+    return truncateAll(t('diagnosticDone', { count: list.length, list: models }), MAX_MESSAGE);
   });
 
   // --- Scene actions ---------------------------------------------------------------------------------
@@ -750,6 +854,25 @@ export function createApp(
     ],
     OV: [['temperature', 'temp']],
   };
+  // Many fridges report no measured temperature (tempZ1 / tempZ2), only
+  // their setpoints: the widget shows these instead of nothing.
+  const SETPOINT_KEYS = {
+    REF: [
+      ['zone1_setpoint_REF', 'tempSelZ1'],
+      ['zone2_setpoint_REF', 'tempSelZ2'],
+    ],
+    FRE: [['zone1_setpoint_FRE', 'tempSelZ1']],
+    WC: [
+      ['zone1_setpoint', 'tempSelZ1'],
+      ['zone2_setpoint', 'tempSelZ2'],
+    ],
+  };
+
+  const temperaturesOf = (status, keys = []) =>
+    keys
+      .filter(([, param]) => (status?.params?.[param] ?? '') !== '')
+      .map(([label, param]) => ({ label, value: Number(status.params[param]) }))
+      .filter((temperature) => Number.isFinite(temperature.value));
 
   /** What the widgets show of an appliance. */
   const viewOf = (entry) => {
@@ -767,9 +890,10 @@ export function createApp(
         ),
       );
     }
-    const temperatures = (TEMPERATURE_KEYS[entry.type] ?? [])
-      .map(([label, param]) => ({ label, value: Number(status?.params?.[param]) }))
-      .filter((temperature) => status?.params && Number.isFinite(temperature.value));
+    let temperatures = temperaturesOf(status, TEMPERATURE_KEYS[entry.type]);
+    if (temperatures.length === 0) {
+      temperatures = temperaturesOf(status, SETPOINT_KEYS[entry.type]);
+    }
     return {
       deviceId: entry.deviceId,
       name: entry.name,

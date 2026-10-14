@@ -222,7 +222,44 @@ test('writes: the command plan of each writable feature', () => {
 
   const fridge = entryOf('ref_10188');
   assert.deepEqual(featureOf('zone1_setpoint').write(fridge, 4).values, { tempSelZ1: 4 });
-  assert.throws(() => featureOf('super_cool').write(fridge, 1), CommandError, 'not in settings');
+  // Fridge modes are programs of startProgram, not settings.
+  assert.equal(
+    featureOf('super_cool').write(fridge, 1).command.category,
+    'PROGRAMS.REF.SUPER_COOL',
+  );
+  const off = featureOf('super_cool').write(fridge, 0).command;
+  assert.equal(off.name, 'stopProgram');
+  assert.deepEqual(Object.keys(off.parameters), ['quickModeZ1'], 'the other modes stay');
+  const fridgeMode = featureOf('fridge_mode');
+  assert.equal(fridgeMode.write(fridge, 'holiday').command.category, 'PROGRAMS.REF.HOLIDAY');
+  assert.deepEqual(Object.keys(fridgeMode.write(fridge, 'none').command.parameters).sort(), [
+    'holidayMode',
+    'intelligenceMode',
+    'quickModeZ1',
+    'quickModeZ2',
+  ]);
+  assert.throws(() => fridgeMode.write(fridge, 'nope'), CommandError);
+});
+
+test('fridge mode: the options of the model, the current mode in pyhOn order', () => {
+  const mode = featureOf('fridge_mode');
+  const fridge = entryOf('ref_10188');
+  assert.deepEqual(
+    mode.options(fridge, 'fr').map((option) => [option.value, option.label]),
+    [
+      ['none', 'Aucun mode'],
+      ['holiday', 'Mode vacances'],
+      ['auto_set', 'Mode auto'],
+      ['super_cool', 'Super froid'],
+      ['super_freeze', 'Super congélation'],
+    ],
+  );
+  assert.deepEqual(mode.value(fridge), { text: 'auto_set' });
+  const both = entryOf('ref_10188', { params: { holidayMode: '1' } });
+  assert.deepEqual(mode.value(both), { text: 'holiday' });
+  const idle = entryOf('ref_10188', { params: { intelligenceMode: '0' } });
+  assert.deepEqual(mode.value(idle), { text: 'none' });
+  assert.equal(mode.present(entryOf('wm_1301')), false);
 });
 
 test('remote control: commands refused when disabled or offline', () => {

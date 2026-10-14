@@ -80,7 +80,7 @@ sequenceDiagram
 | ----------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Lave-linge, lave-linge séchant, sèche-linge, lave-vaisselle | État, Phase (`text`), Programme (`text` / `select`, le lance), Temps restant (`duration`, min), Pause (`switch`), Porte (`opening-sensor`), Contrôle à distance, Sel et liquide de rinçage à remettre (`unknown` / `binary`), Énergie (`energy-sensor` / `index`, kWh), Eau (`volume-sensor`, L), Erreur (`text`) |
 | Climatiseur                                                 | Marche/arrêt, Mode, Consigne, Vitesse de ventilation, Oscillation verticale et horizontale (`air-conditioning`), températures intérieure et extérieure (`temperature-sensor`), Énergie, Erreur                                                                                                                    |
-| Réfrigérateur, congélateur, cave à vin                      | Températures des zones (`temperature-sensor`), consignes des zones (`thermostat` / `target-temperature`), portes (`opening-sensor`), super froid, super congélation, modes vacances et auto (`switch`), température et humidité ambiantes, Erreur                                                                 |
+| Réfrigérateur, congélateur, cave à vin                      | Températures des zones (`temperature-sensor`), consignes des zones (`thermostat` / `target-temperature`), portes (`opening-sensor`), super froid, super congélation, modes vacances et auto (`switch`), liste Mode (`text` / `select`), température et humidité ambiantes, Erreur                                 |
 | Four                                                        | État, Temps restant, Contrôle à distance, température et température choisie, Erreur (lecture seule)                                                                                                                                                                                                              |
 | Autres types (hotte, plaque, chauffe-eau, purificateur…)    | État, température, temps restant, Erreur, s’ils sont remontés                                                                                                                                                                                                                                                     |
 
@@ -95,7 +95,7 @@ Identifiant externe d’un appareil : `ext:<sélecteur>:appliance:<adresse MAC s
 ![Les widgets « Appareils hOn » et « Appareil hOn » en français : état, phase et temps restant de chaque appareil, avancement du lave-linge avec ses boutons pause et arrêt (illustration générée, pas une capture d’écran)](docs/assets/widgets.fr.png)
 
 - **Appareils hOn** : nombre en cours, nombre d’appareils, chaque appareil avec son badge d’état, sa phase et son temps restant (ou ses températures), l’état du compte hOn, un bouton Actualiser. Réglage : tous les appareils ou seulement ceux en fonctionnement.
-- **Appareil hOn** : un appareil choisi dans les réglages : état, phase, programme, contrôle à distance, erreur, une jauge d’avancement et le temps restant pendant un cycle, les températures, et les boutons Pause, Reprendre, Arrêter (avec confirmation) ou Allumer / Éteindre.
+- **Appareil hOn** : un appareil choisi dans les réglages : état, phase, programme, contrôle à distance, erreur, une jauge d’avancement et le temps restant pendant un cycle, les températures (les consignes d’un réfrigérateur qui n’en remonte pas), et les boutons Pause, Reprendre, Arrêter (avec confirmation) ou Allumer / Éteindre.
 
 Les images sont générées par `docs/illustrations/render.sh` à partir du vrai code des widgets : ce sont des illustrations, pas des captures d’écran.
 
@@ -144,7 +144,7 @@ Une commande envoyée par une action de scène ne déclenche jamais de déclench
 | `poll_interval` | select | `60`   | intervalle d’actualisation en secondes : `30`, `60`, `120`, `300` |
 | `language`      | select | `en`   | langue des noms de fonctionnalités et des états texte             |
 
-Boutons de la page de configuration : **Tester la connexion** (se connecte et liste les appareils avec leur état), **Lister les programmes** (les noms de programmes de l’action de scène `start_program`).
+Boutons de la page de configuration : **Tester la connexion** (se connecte et liste les appareils avec leur état), **Lister les programmes** (les noms de programmes de l’action de scène `start_program`), **Diagnostic** (écrit dans l’onglet Journaux ce que remonte chaque appareil, pour un retour).
 
 ## Utilisation
 
@@ -161,7 +161,7 @@ La documentation utilisateur est dans [docs/fr.md](docs/fr.md) ([en](docs/en.md)
 - Les états sont interrogés (30 s au minimum) ; le canal push de l’application (MQTT) n’est pas encore utilisé.
 - Les noms de programmes sont ceux du cloud hOn, en anglais. Les recettes guidées et les programmes de four ne peuvent pas être lancés.
 - Un appareil Gladys par appareil hOn : les appareils multizones que hOn liste par zone n’affichent que la première.
-- Super froid, super congélation, modes vacances et auto sont en lecture seule sur les réfrigérateurs dont les réglages ne les contiennent pas.
+- Les modes du réfrigérateur sont lancés par les programmes de l’appareil, comme le fait l’application hOn ; un congélateur dont les modes dépendent de sa consigne les garde en lecture seule. Un réfrigérateur ajouté avec une version précédente obtient la liste **Mode** et ses modes pilotables avec le bouton **Mettre à jour** de l’onglet Découverte.
 - Testée avec les données anonymisées d’appareils de [hon-test-data](https://github.com/Andre0512/hon-test-data), pas encore avec un vrai compte : vos retours sont les bienvenus.
 
 ## Développement local
@@ -222,7 +222,7 @@ flowchart LR
 - **« Le contrôle à distance est désactivé »** : activez-le sur le panneau de l’appareil ; la plupart des modèles le désactivent en fin de cycle.
 - **Aucun appareil** : ajoutez-les dans l’application hOn, puis **Tester la connexion**.
 - **Une fonctionnalité manque** : les fonctionnalités suivent ce que le modèle remonte ; ouvrez une issue avec le type et le modèle (paramètres `HON_TYPE` et `HON_MODEL` de l’appareil).
-- Journaux : l’onglet Journaux de l’intégration ; `DEBUG=gladys-integration-sdk` pour le détail du SDK.
+- Journaux : l’onglet Journaux de l’intégration. Pour un retour, cliquez sur **Diagnostic** dans la configuration et copiez les lignes commençant par `hOn diagnostic` (Gladys ne permet pas de passer `DEBUG` au conteneur : cette variable ne sert qu’en exécution locale).
 
 ## Contribuer
 

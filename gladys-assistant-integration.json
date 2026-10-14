@@ -65,6 +65,22 @@
           }
         }
       ]
+    },
+    {
+      "key": "diagnostic",
+      "timeout_seconds": 60,
+      "label": {
+        "en": "Diagnostic",
+        "fr": "Diagnostic",
+        "de": "Diagnose",
+        "es": "Diagnóstico"
+      },
+      "description": {
+        "en": "Writes to the Logs tab what each appliance reports (states, commands, programs), for a report on GitHub or the forum. E-mail, MAC address, serial number and nickname are left out.",
+        "fr": "Écrit dans l’onglet Journaux ce que remonte chaque appareil (états, commandes, programmes), pour un retour sur GitHub ou le forum. E-mail, adresse MAC, numéro de série et surnom en sont retirés.",
+        "de": "Schreibt in den Tab Protokolle, was jedes Gerät meldet (Zustände, Befehle, Programme), für eine Meldung auf GitHub oder im Forum. E-Mail, MAC-Adresse, Seriennummer und Spitzname sind entfernt.",
+        "es": "Escribe en la pestaña Registros lo que informa cada electrodoméstico (estados, comandos, programas), para un informe en GitHub o en el foro. El correo, la dirección MAC, el número de serie y el apodo se omiten."
+      }
     }
   ],
   "config_schema": [

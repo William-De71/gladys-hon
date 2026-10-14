@@ -37,7 +37,7 @@ Ouvrez l’onglet **Découverte** de l’intégration : chaque appareil du compt
 
 - Lave-linge, lave-linge séchants, sèche-linge, lave-vaisselle : **État** (en cours, en pause, terminé, départ différé…), **Phase** (lavage, rinçage, essorage, séchage…), **Programme** (choisissez-en un pour le lancer), **Temps restant**, **Pause**, **Porte**, **Contrôle à distance**, **Consommation d’énergie** et **Consommation d’eau** (modèles qui les remontent), **Erreur**, et pour les lave-vaisselle **Sel à remettre** et **Liquide de rinçage à remettre**.
 - Climatiseurs : **Marche/arrêt**, **Mode**, **Consigne**, **Vitesse de ventilation**, **Oscillation**, températures intérieure et extérieure.
-- Réfrigérateurs, congélateurs, caves à vin : température et consigne de chaque zone, portes, super froid, super congélation, modes vacances et auto (pilotables quand le modèle le permet), température et humidité ambiantes.
+- Réfrigérateurs, congélateurs, caves à vin : température et consigne de chaque zone, portes, super froid, super congélation, modes vacances et auto et une liste **Mode** (lancés comme dans l’application hOn), température et humidité ambiantes.
 - Fours et autres types : état, températures, temps restant, erreur.
 
 Chaque appareil porte un badge **cloud**, ou **injoignable** quand il n’est pas connecté au cloud hOn. Les noms de programmes sont ceux du cloud hOn, en anglais.
@@ -47,7 +47,7 @@ Chaque appareil porte un badge **cloud**, ou **injoignable** quand il n’est pa
 ![Les widgets « Appareils hOn » et « Appareil hOn » : état, phase et temps restant de chaque appareil, avancement du lave-linge avec ses boutons pause et arrêt (illustration générée, pas une capture d’écran)](https://raw.githubusercontent.com/William-De71/gladys-hon/main/docs/assets/widgets.fr.png)
 
 - **Appareils hOn** : chaque appareil avec son état, sa phase et son temps restant (ou ses températures), et un bouton Actualiser. Réglage : tous les appareils ou seulement ceux en fonctionnement.
-- **Appareil hOn** : un appareil (réglage) : état, phase, programme, contrôle à distance, avancement du cycle, temps restant, températures, et les boutons Pause, Reprendre, Arrêter (avec confirmation) ou Allumer / Éteindre.
+- **Appareil hOn** : un appareil (réglage) : état, phase, programme, contrôle à distance, avancement du cycle, temps restant, températures (les consignes d’un réfrigérateur qui n’en remonte pas), et les boutons Pause, Reprendre, Arrêter (avec confirmation) ou Allumer / Éteindre.
 
 ### Déclencheurs de scène
 
@@ -78,4 +78,4 @@ Un cycle lancé ou arrêté par une action de scène ne déclenche pas ces décl
 - **« Le contrôle à distance est désactivé »** : activez-le sur le panneau de l’appareil ; sur la plupart des modèles il se désactive à la fin du cycle.
 - **Une commande est acceptée mais rien ne se passe** : l’appareil l’applique en quelques secondes ; il est relu 5 et 20 secondes plus tard. Vérifiez la porte et le contrôle à distance.
 - **Une fonctionnalité manque** : les fonctionnalités suivent ce que le modèle remonte au cloud hOn ; ouvrez une issue avec le type et le modèle.
-- Journaux : l’onglet Journaux de l’intégration, avec `DEBUG=gladys-integration-sdk` pour le détail. Issues : https://github.com/William-De71/gladys-hon/issues
+- Journaux : l’onglet Journaux de l’intégration. Pour un retour, cliquez sur **Diagnostic** dans la configuration et copiez les lignes commençant par `hOn diagnostic` (e-mail, adresse MAC, numéro de série et surnom en sont retirés). Issues : https://github.com/William-De71/gladys-hon/issues

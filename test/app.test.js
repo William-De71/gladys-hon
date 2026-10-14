@@ -363,6 +363,84 @@ test('configuration buttons: test the connection, list the programs', async () =
   }
 });
 
+test('fridge: the mode list starts a program, the widget falls back to the setpoints', async () => {
+  const cloud = fakeHon();
+  // Many fridges report their setpoints only (hon-test-data ref_10009, ref_10138).
+  delete cloud.contexts.get(MAC.fridge).shadow.parameters.tempZ1;
+  delete cloud.contexts.get(MAC.fridge).shadow.parameters.tempZ2;
+  const { fake, app } = await setup({ cloud });
+  try {
+    const fridge = deviceOf(fake, MAC.fridge);
+    assert.equal(featureOf(fridge, 'super_cool').read_only, false);
+    assert.equal(fake.lastState(`${id(MAC.fridge)}:fridge_mode`), 'auto_set');
+    ok(await fake.setValue(fridge, featureOf(fridge, 'fridge_mode'), 'super_freeze'));
+    assert.equal(cloud.sent.at(-1).commandName, 'startProgram');
+    assert.equal(cloud.sent.at(-1).programName, 'PROGRAMS.REF.SUPER_FREEZE');
+    assert.deepEqual(cloud.sent.at(-1).parameters, { quickModeZ2: '1' });
+    ok(await fake.setValue(fridge, featureOf(fridge, 'auto_set'), 0));
+    assert.equal(cloud.sent.at(-1).commandName, 'stopProgram');
+    assert.deepEqual(cloud.sent.at(-1).parameters, { intelligenceMode: '0' });
+
+    const { content } = ok(
+      await fake.widgetGet('appliance', { settings: { device: id(MAC.fridge) } }),
+    );
+    assert.deepEqual(
+      content.components
+        .filter((component) => component.type === 'value')
+        .map((component) => [component.label.fr, component.value]),
+      [
+        ['Consigne réfrigérateur', 5],
+        ['Consigne congélateur', -19],
+      ],
+    );
+  } finally {
+    await app.stop();
+  }
+});
+
+test('diagnostic: the Logs tab gets states and commands, never what identifies the user', async () => {
+  const lines = [];
+  const logger = { ...silentLogger, info: (line) => lines.push(line) };
+  const clock = fakeClock();
+  const cloud = fakeHon({ now: clock.now });
+  const gladys = createFakeGladys({ config: structuredClone(CONFIG) });
+  const app = createApp(gladys, {
+    fetch: cloud.fetch,
+    storage: memoryStorage(),
+    logger,
+    now: clock.now,
+    afterCommandMs: [],
+  });
+  await gladys.connect();
+  await app.start();
+  try {
+    lines.length = 0;
+    const message = msg(await gladys.fake.action('diagnostic'));
+    assert.match(message.fr, /Diagnostic de 6 appareil\(s\).*REF HSW59F18EIPT/);
+    const fridge = lines.filter((line) => line.startsWith('hOn diagnostic 5/6 REF HSW59F18EIPT'));
+    assert.deepEqual(
+      fridge.map((line) => line.split(':')[0].split(' ').pop()),
+      ['appliance', 'status', 'commands', 'programs'],
+    );
+    const all = lines.join('\n');
+    assert.match(all, /"intelligenceMode":"1"/);
+    assert.match(all, /PROGRAMS\.REF\.AUTO_SET/);
+    assert.match(all, /"tempSelZ1":"1\.\.9\/1"|"tempSelZ1":"[-0-9.]+\.\.[-0-9.]+\/[0-9.]+"/);
+    for (const secret of [
+      'a4-cf-12',
+      'a4cf12',
+      'XX11X1X1111',
+      'Kitchen fridge',
+      'user@example.com',
+    ]) {
+      assert.equal(all.includes(secret), false, secret);
+    }
+  } finally {
+    await app.stop();
+    await gladys.disconnect();
+  }
+});
+
 test('language change: feature names and text states in the new language', async () => {
   const { fake, app } = await setup();
   try {

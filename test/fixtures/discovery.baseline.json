@@ -416,7 +416,7 @@
       "min": 0,
       "max": 1,
       "step": null,
-      "read_only": true
+      "read_only": false
     },
     {
       "external_id": "ext:test-integration:appliance:a4cf12000005:super_freeze",
@@ -426,7 +426,7 @@
       "min": 0,
       "max": 1,
       "step": null,
-      "read_only": true
+      "read_only": false
     },
     {
       "external_id": "ext:test-integration:appliance:a4cf12000005:holiday_mode",
@@ -436,7 +436,7 @@
       "min": 0,
       "max": 1,
       "step": null,
-      "read_only": true
+      "read_only": false
     },
     {
       "external_id": "ext:test-integration:appliance:a4cf12000005:auto_set",
@@ -446,7 +446,17 @@
       "min": 0,
       "max": 1,
       "step": null,
-      "read_only": true
+      "read_only": false
+    },
+    {
+      "external_id": "ext:test-integration:appliance:a4cf12000005:fridge_mode",
+      "category": "text",
+      "type": "select",
+      "unit": null,
+      "min": 0,
+      "max": 0,
+      "step": null,
+      "read_only": false
     },
     {
       "external_id": "ext:test-integration:appliance:a4cf12000005:zone1_door",
