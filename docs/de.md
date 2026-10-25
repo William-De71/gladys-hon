@@ -8,7 +8,7 @@ Sie kommuniziert mit der **hOn-Cloud** über das Konto der App, über dieselbe i
 
 ## Voraussetzungen
 
-- Gladys Assistant 5.1.1 oder neuer.
+- Gladys Assistant 5.3.0 oder neuer.
 - Ein hOn-Konto (E-Mail-Adresse und Passwort), in dem Ihre Geräte in der hOn-App bereits hinzugefügt und verbunden sind. Melden Sie sich einmal in der App an, wenn Sie das Konto gerade erstellt oder das Passwort geändert haben (Bedingungen zu akzeptieren).
 - Konten mit Zwei-Schritt-Bestätigung per E-Mail werden nicht unterstützt.
 

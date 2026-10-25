@@ -5,7 +5,7 @@
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 [![Latest release](https://img.shields.io/github/v/release/William-De71/gladys-hon?sort=semver)](https://github.com/William-De71/gladys-hon/releases)
 [![CI](https://img.shields.io/github/actions/workflow/status/William-De71/gladys-hon/release.yml?branch=main&label=CI)](https://github.com/William-De71/gladys-hon/actions/workflows/release.yml)
-[![Gladys](https://img.shields.io/badge/Gladys-%E2%89%A5%205.1.1-2f6fb5)](https://gladysassistant.com)
+[![Gladys](https://img.shields.io/badge/Gladys-%E2%89%A5%205.3.0-2f6fb5)](https://gladysassistant.com)
 
 ![hOn for Gladys Assistant](cover.jpg)
 
@@ -125,7 +125,7 @@ A command sent by a scene action never fires a trigger (the transition it causes
 
 ## Requirements
 
-- Gladys Assistant **5.1.1 or later** (dashboard widgets and scene triggers and actions of integrations; older instances cannot install the integration).
+- Gladys Assistant **5.3.0 or later** (catalog keywords of Gladys 5.3, dashboard widgets and scene triggers and actions of integrations; older instances cannot install the integration).
 - An hOn account where the appliances are added and connected. Log in to the hOn app once after creating the account or changing the password. Accounts with two-step verification by e-mail are not supported.
 - Internet access for Gladys.
 

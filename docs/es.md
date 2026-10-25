@@ -8,7 +8,7 @@ Se comunica con la **nube hOn** con la cuenta de la app, mediante la misma inter
 
 ## Requisitos
 
-- Gladys Assistant 5.1.1 o posterior.
+- Gladys Assistant 5.3.0 o posterior.
 - Una cuenta hOn (correo electrónico y contraseña) donde sus electrodomésticos ya están añadidos y conectados, en la app hOn. Inicie sesión una vez en la app si acaba de crear la cuenta o de cambiar la contraseña (condiciones que aceptar).
 - Las cuentas con verificación en dos pasos por correo no son compatibles.
 

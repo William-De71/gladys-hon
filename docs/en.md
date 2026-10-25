@@ -8,7 +8,7 @@ It talks to the **hOn cloud** with the account of the app, through the same unof
 
 ## Requirements
 
-- Gladys Assistant 5.1.1 or later.
+- Gladys Assistant 5.3.0 or later.
 - An hOn account (e-mail address and password) where your appliances are already added and connected, in the hOn app. Log in to the app once if you have just created the account or changed the password (terms to accept).
 - Accounts with two-step verification by e-mail are not supported.
 

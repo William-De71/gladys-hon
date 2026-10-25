@@ -12,7 +12,7 @@ the SDK) in its own sandboxed Docker container, talking to Gladys through
 and to the **hOn cloud** (`api-iot.he.services`) with the account of the hOn
 app. Cloud only (`transports: ["cloud"]`).
 
-A **device integration** (`type: "device"`, Gladys 5.1.1+). The hOn API is
+A **device integration** (`type: "device"`, Gladys 5.3.0+). The hOn API is
 not public: `src/hon/` ports the login, requests and command logic of
 [pyhOn](https://github.com/Andre0512/pyhOn) and its maintained fork
 [pyhon-revived](https://github.com/mmalolepszy/pyhon-revived) (MIT, credited

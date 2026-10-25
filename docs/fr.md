@@ -8,7 +8,7 @@ Elle dialogue avec le **cloud hOn** avec le compte de l’application, par la m�
 
 ## Prérequis
 
-- Gladys Assistant 5.1.1 ou plus récent.
+- Gladys Assistant 5.3.0 ou plus récent.
 - Un compte hOn (adresse e-mail et mot de passe) où vos appareils sont déjà ajoutés et connectés, dans l’application hOn. Connectez-vous une fois à l’application si vous venez de créer le compte ou de changer le mot de passe (conditions à accepter).
 - Les comptes avec vérification en deux étapes par e-mail ne sont pas pris en charge.
 

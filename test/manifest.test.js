@@ -32,8 +32,9 @@ test('one version everywhere, image of this repository', () => {
 
 test('store rules: type, Gladys version, transports, categories, permissions', () => {
   assert.equal(manifest.type, 'device');
-  // widgets and scene_* need 5.1.0; 5.1.1 fixes the widget card dates.
-  assert.equal(manifest.gladys_version, '>=5.1.1');
+  // widgets and scene_* need 5.1.0, 5.1.1 fixes the widget card dates;
+  // the catalog keywords need 5.3.0.
+  assert.equal(manifest.gladys_version, '>=5.3.0');
   // Everything goes through the hOn cloud: no local channel.
   assert.deepEqual(manifest.transports, ['cloud']);
   assert.deepEqual(manifest.categories, ['appliances', 'climate']);
@@ -143,4 +144,16 @@ test('widgets: the keys of the code, settings without secrets', () => {
       assert.ok(!['secret', 'oauth2', 'account_link'].includes(setting.type));
     }
   }
+});
+
+test('catalog of Gladys 5.3.0: search keywords within the store bounds, countries', () => {
+  const { keywords } = manifest;
+  assert.ok(Array.isArray(keywords) && keywords.length >= 1 && keywords.length <= 10);
+  const normalized = keywords.map((keyword) => keyword.trim().toLowerCase());
+  for (const keyword of normalized) {
+    assert.ok(keyword.length >= 2 && keyword.length <= 30, keyword);
+  }
+  assert.equal(new Set(normalized).size, normalized.length, 'unique once trimmed and lowercased');
+  assert.ok(!normalized.includes(manifest.name.toLowerCase()), 'never the name itself');
+  assert.equal(manifest.countries, undefined, 'worldwide: no countries');
 });
