@@ -36,6 +36,7 @@ const response = (status, body) => ({
   ok: status >= 200 && status < 300,
   status,
   json: async () => body,
+  text: async () => JSON.stringify(body),
 });
 
 /**
@@ -54,6 +55,8 @@ export function fakeHon({ fixtures = FIXTURES, now = () => Date.now() } = {}) {
     replays: 0,
     refuseLogin: false,
     refuseReplay: false,
+    staleReplay: false, // the replay answers tokens the API refuses
+    forbidAll: false, // every API request answers 403
     failContext: false,
     tokenLifetimeMs: 60 * 60 * 1000,
     validIdTokens: new Set(),
@@ -85,9 +88,12 @@ export function fakeHon({ fixtures = FIXTURES, now = () => Date.now() } = {}) {
     cloud.contexts.get(mac).lastConnEvent.category = connected ? 'CONNECTED' : 'DISCONNECTED';
   };
 
-  const tokens = () => {
-    const idToken = jwt(now() + cloud.tokenLifetimeMs) + cloud.validIdTokens.size;
-    cloud.validIdTokens.add(idToken);
+  const tokens = (valid = true) => {
+    const idToken =
+      jwt(now() + cloud.tokenLifetimeMs) + cloud.validIdTokens.size + cloud.calls.length;
+    if (valid) {
+      cloud.validIdTokens.add(idToken);
+    }
     return {
       id_token: idToken,
       cognito_token: `cognito-${cloud.validIdTokens.size}`,
@@ -124,13 +130,17 @@ export function fakeHon({ fixtures = FIXTURES, now = () => Date.now() } = {}) {
       if (cloud.refuseReplay && cloud.issued === body.session_id) {
         return response(401, { message: 'expired session' });
       }
-      if (cloud.issued === body.session_id) {
+      const replay = cloud.issued === body.session_id;
+      if (replay) {
         cloud.replays += 1;
       }
       cloud.issued = body.session_id;
-      return response(200, { tokens: tokens() });
+      return response(200, { tokens: tokens(!(replay && cloud.staleReplay)) });
     }
 
+    if (cloud.forbidAll) {
+      return response(403, { message: 'Forbidden' });
+    }
     if (!cloud.validIdTokens.has(headers['id-token']) || !headers['cognito-token']) {
       return response(401, { message: 'Unauthorized' });
     }

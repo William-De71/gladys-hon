@@ -14,6 +14,9 @@
 //     account that logs in too often, even with the right password;
 //   - tokens are renewed a few minutes before the `exp` of the id token, by
 //     replay first, by a full login only when the replay is refused;
+//   - the replay can mint tokens the API still refuses (401 / 403: the hOn
+//     cloud dropped the session, which keeps answering /ciam/token): the
+//     client then asks for a full login, at most every 30 minutes;
 //   - a refused login pauses every new attempt (15 min, doubling up to 4 h):
 //     a wrong password retried every minute would lock the account.
 // -----------------------------------------------------------------------------
@@ -25,6 +28,7 @@ const RENEW_BEFORE_MS = 5 * 60 * 1000;
 const DEFAULT_LIFETIME_MS = 60 * 60 * 1000;
 const PAUSE_MIN_MS = 15 * 60 * 1000;
 const PAUSE_MAX_MS = 4 * 60 * 60 * 1000;
+const RELOGIN_EVERY_MS = 30 * 60 * 1000;
 const TIMEOUT_MS = 20 * 1000;
 
 /** The hOn cloud refused the e-mail address or the password. */
@@ -90,6 +94,7 @@ export function createSession({ fetch, store, logger, now = Date.now }) {
   let password = '';
   let state = null; // { account, sessionId, codeVerifier, idToken, cognitoToken, expiresAt }
   let pausedUntil = 0;
+  let reloggedAt = -Infinity;
   let pauseMs = PAUSE_MIN_MS;
   let pending = null;
   let loaded = false;
@@ -176,6 +181,12 @@ export function createSession({ fetch, store, logger, now = Date.now }) {
     }
   };
 
+  const relogin = async () => {
+    state = { ...(await login()), account: accountFingerprint(email) };
+    await persist();
+    return state;
+  };
+
   const renew = async () => {
     if (state?.sessionId) {
       try {
@@ -190,9 +201,7 @@ export function createSession({ fetch, store, logger, now = Date.now }) {
         logger.debug(`hOn: token renewal failed: ${error.message}`);
       }
     }
-    state = { ...(await login()), account: accountFingerprint(email) };
-    await persist();
-    return state;
+    return relogin();
   };
 
   const single = (task) => {
@@ -228,10 +237,12 @@ export function createSession({ fetch, store, logger, now = Date.now }) {
 
     /**
      * @description Valid tokens: the saved session, renewed, or a new login.
-     * @param {object} [options] - `{ force }`: renew even if still valid.
-     * @returns {Promise<{ idToken: string, cognitoToken: string }>} The tokens.
+     * @param {object} [options] - `{ force }`: renew even if still valid;
+     * `{ relogin }`: a full login, the replayed tokens being refused (null
+     * when one already happened in the last 30 minutes).
+     * @returns {Promise<{ idToken: string, cognitoToken: string }|null>} The tokens.
      */
-    async tokens({ force = false } = {}) {
+    async tokens({ force = false, relogin: fresh = false } = {}) {
       if (!loaded) {
         loaded = true;
         try {
@@ -242,6 +253,14 @@ export function createSession({ fetch, store, logger, now = Date.now }) {
         } catch (error) {
           logger.debug(`hOn: no saved session (${error.message})`);
         }
+      }
+      if (fresh) {
+        if (now() - reloggedAt < RELOGIN_EVERY_MS) {
+          return null;
+        }
+        reloggedAt = now();
+        logger.info('hOn: tokens refused after renewal, logging in again');
+        return single(relogin);
       }
       if (!force && state?.idToken && state.expiresAt - RENEW_BEFORE_MS > now()) {
         return state;

@@ -7,8 +7,9 @@
 //   commands(appliance)     GET  /commands/v1/retrieve     (programs, settings)
 //   send(appliance, ...)    POST /commands/v1/send
 //
-// A 401 / 403 renews the tokens once and retries (the id token lives about an
-// hour). Endpoints and bodies come from pyhon-revived
+// A 401 / 403 renews the tokens by replay and retries (the id token lives
+// about an hour); refused again, it logs in afresh and retries once more, like
+// pyhon-revived (`pyhon/connection/handler/hon.py`). Endpoints and bodies come from pyhon-revived
 // (`pyhon/connection/api.py`, MIT).
 // -----------------------------------------------------------------------------
 
@@ -77,8 +78,11 @@ const timestamp = (ms) => new Date(ms).toISOString();
 export function createClient({ fetch, session, mobileId, now = Date.now }) {
   let requests = 0;
 
-  const request = async (method, path, { query, body } = {}, retried = false) => {
-    const tokens = await session.tokens({ force: retried });
+  const request = async (method, path, { query, body } = {}, attempt = 0) => {
+    const tokens = await session.tokens({ force: attempt === 1, relogin: attempt === 2 });
+    if (!tokens) {
+      throw new ApiError(`hOn ${path}: HTTP 403 (new login already tried)`, 403);
+    }
     const url = `${API_URL}${path}${query ? `?${new URLSearchParams(query)}` : ''}`;
     requests += 1;
     let response;
@@ -97,11 +101,20 @@ export function createClient({ fetch, session, mobileId, now = Date.now }) {
     } catch (error) {
       throw new ApiError(`hOn ${path}: ${error.cause?.code ?? error.message}`);
     }
-    if ((response.status === 401 || response.status === 403) && !retried) {
-      return request(method, path, { query, body }, true);
+    if ((response.status === 401 || response.status === 403) && attempt < 2) {
+      return request(method, path, { query, body }, attempt + 1);
     }
     if (!response.ok) {
-      throw new ApiError(`hOn ${path}: HTTP ${response.status}`, response.status);
+      // The body says why (an expired session, an outdated app version…):
+      // short, without the tokens, which only travel in the headers.
+      const reason = await response
+        .text()
+        .then((text) => text.replace(/\s+/g, ' ').trim().slice(0, 160))
+        .catch(() => '');
+      throw new ApiError(
+        `hOn ${path}: HTTP ${response.status}${reason ? ` ${reason}` : ''}`,
+        response.status,
+      );
     }
     try {
       return await response.json();

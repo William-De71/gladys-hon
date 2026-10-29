@@ -199,6 +199,36 @@ test('client: an expired token is renewed once and the request retried', async (
   assert.equal(cloud.replays, 1);
 });
 
+test('client: replayed tokens still refused lead to a full login', async () => {
+  const clock = fakeClock();
+  const cloud = fakeHon({ now: clock.now });
+  const client = clientOf(cloud, clock);
+  await client.appliances();
+  cloud.validIdTokens.clear(); // the cloud dropped the session...
+  cloud.staleReplay = true; // ...but /ciam/token still replays it
+  assert.equal((await client.appliances()).length, 6);
+  assert.equal(cloud.replays, 1);
+  assert.equal(cloud.logins, 2);
+});
+
+test('client: a lasting 403 logs in again at most every 30 minutes, with the reason', async () => {
+  const clock = fakeClock();
+  const cloud = fakeHon({ now: clock.now });
+  const client = clientOf(cloud, clock);
+  await client.appliances();
+  cloud.forbidAll = true;
+  const error = await client.appliances().catch((e) => e);
+  assert.equal(error.status, 403);
+  assert.match(error.message, /appliance-list: HTTP 403 .*Forbidden/);
+  assert.equal(cloud.logins, 2);
+  clock.advance(5 * 60 * 1000);
+  await assert.rejects(client.appliances(), /new login already tried/);
+  assert.equal(cloud.logins, 2, 'no login before 30 minutes');
+  clock.advance(25 * 60 * 1000);
+  await assert.rejects(client.appliances());
+  assert.equal(cloud.logins, 3);
+});
+
 test('client: the send body of the hOn app', async () => {
   const clock = fakeClock();
   const cloud = fakeHon({ now: clock.now });
